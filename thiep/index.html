@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Mời Tốt Nghiệp THPT 🎓</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Hiệu ứng ánh sáng vàng -->
+    <div class="golden-light"></div>
+    
+    <!-- Hiệu ứng kim tuyến bay -->
+    <div id="glitter-effect"></div>
+    
+    <!-- Màn hình phong bì mở đầu -->
+    <div id="envelope-screen" class="envelope-screen">
+        <div class="envelope" onclick="openEnvelope()">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body">
+                <div class="stamp">🎓</div>
+                <div class="envelope-text">
+                    <h2><i class="fas fa-graduation-cap"></i> Thiệp Mời Tốt Nghiệp</h2>
+                    <p>Nhấn để mở thiệp</p>
+                    <div class="gold-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="envelope-subtitle">
+            <p>Trường THPT <span class="gold-text">[Tên THPT Phạm Văn Đồng]</span></p>
+        </div>
+    </div>
+
+    <!-- Nội dung thiệp chính -->
+    <div id="main-content" class="hidden">
+        <!-- Header với ảnh chủ thiệp -->
+        <header class="header">
+            <div class="gold-border-top"></div>
+            <div class="profile-container">
+                <div class="profile-frame">
+                    <div class="gold-frame">
+                        <img src="assets/image/1.jpg" alt="Học sinh tốt nghiệp" class="profile-img">
+                        <div class="frame-decoration">
+                            <i class="fas fa-star gold-star"></i>
+                            <i class="fas fa-star gold-star"></i>
+                            <i class="fas fa-star gold-star"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="title-container">
+                        <h1 class="elegant-title">LỄ TỐT NGHIỆP THPT</h1>
+                        <div class="title-line"></div>
+                        <h2 class="graduate-name">NGUYỄN THỊ TRÀ MY</h2>
+                        <p class="school-info">Trường THPT Phạm Văn Đồng <span class="gold-text">[Tên Trường]</span></p>
+                        <p class="class-info">Lớp 12A9 - Niên khóa 2023-2026</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gold-border-bottom"></div>
+        </header>
+
+        <!-- Nội dung thiệp -->
+        <main class="main-content">
+            <div class="invitation-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-envelope-open-text"></i> THIỆP MỜI TRANG TRỌNG</h3>
+                    <div class="header-line"></div>
+                </div>
+                
+                <div class="invitation-content">
+                    <p class="invitation-text">
+                        Gia đình chúng tôi trân trọng kính mời Quý Thầy Cô, bạn bè và người thân 
+                        đến dự Lễ Tốt Nghiệp THPT của chúng tôi.
+                    </p>
+                    
+                    <div class="invitation-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>THỜI GIAN</h4>
+                                <p>08:00, Thứ Bảy, ngày 25 tháng 05 năm 2026</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>ĐỊA ĐIỂM</h4>
+                                <p>Hội trường lớn - Trường THPT Phạm Văn Đồng</p>
+                                <p class="address">Số 25 Trường Sa,P.Vĩnh Nguyên,Tp Nha Trang,Khánh Hoà</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>CHƯƠNG TRÌNH</h4>
+                                <div class="schedule">
+                                    <p><span class="time">08:00 - 08:30:</span> Đón tiếp đại biểu</p>
+                                    <p><span class="time">08:30 - 09:30:</span> Lễ tốt nghiệp</p>
+                                    <p><span class="time">09:30 - 10:30:</span> Trao bằng và vinh danh</p>
+                                    <p><span class="time">10:30 - 11:30:</span> Chụp ảnh lưu niệm</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>TRANG PHỤC</h4>
+                                <p>Lịch sự (Áo dài truyền thống / Vest)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-section">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="quote">
+                            "Hành trình vạn dặm bắt đầu từ một bước chân. 
+                            Hôm nay, chúng ta cùng nhau khép lại một chương và mở ra hành trình mới."
+                        </p>
+                        <div class="quote-author">— Thầy Hiệu trưởng [Tên Hiệu trưởng]</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Album ảnh cuộn -->
+            <section class="album-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-images"></i> HÀNH TRÌNH 3 NĂM</h3>
+                    <div class="section-line"></div>
+                    <p class="section-subtitle">Những khoảnh khắc đáng nhớ dưới mái trường THPT</p>
+                </div>
+                
+                <div class="album-container">
+                    <div class="album-control left-control" onclick="scrollAlbum(-1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    
+                    <div class="photo-album">
+                        <div class="photo-track" id="photo-track">
+                            <!-- Ảnh sẽ được thêm bằng JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="album-control right-control" onclick="scrollAlbum(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="album-indicator">
+                    <span class="indicator active"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                </div>
+            </section>
+
+            <!-- Điều khiển nhạc -->
+            <section class="music-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-music"></i> GÓC ÂM NHẠC</h3>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="music-controls">
+                    <div class="music-selector">
+                        <label for="music-selector"><i class="fas fa-headphones"></i> Chọn nhạc nền:</label>
+                        <select id="music-selector" class="elegant-select">
+                            
+                            <option value="assets/music/Gió Nổi Lên Rồi _ 起风了 (1).mp3">Nhạc truyền cảm hứng</option>
+                            
+                            <option value="">Tắt nhạc</option>
+                        </select>
+                    </div>
+                    
+                    <div class="music-buttons">
+                        <button class="music-btn play-btn" onclick="playSelectedMusic()">
+                            <i class="fas fa-play"></i> Phát nhạc
+                        </button>
+                        <button class="music-btn pause-btn" onclick="pauseMusic()">
+                            <i class="fas fa-pause"></i> Tạm dừng
+                        </button>
+                        <button class="music-btn volume-btn" onclick="adjustVolume(0.1)">
+                            <i class="fas fa-volume-down"></i> Âm lượng
+                        </button>
+                    </div>
+                    
+                    <div class="volume-control">
+                        <span>Nhỏ</span>
+                        <input type="range" min="0" max="1" step="0.1" value="0.3" id="volume-slider" onchange="changeVolume(this.value)">
+                        <span>Lớn</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Form gửi lời chúc -->
+            <section class="wishes-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-comment-dots"></i> LỜI CHÚC MỪNG</h3>
+                    <div class="section-line"></div>
+                    <p class="section-subtitle">Gửi những lời chúc tốt đẹp nhất đến tân cử nhân</p>
+                </div>
+                
+                <div class="wishes-container">
+                    <div class="wishes-form">
+                        <form name="wishes" method="POST" data-netlify="true" netlify>
+                            <input type="hidden" name="form-name" value="wishes">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sender"><i class="fas fa-user"></i> Họ tên của bạn</label>
+                                    <input type="text" id="sender" name="sender" placeholder="Nhập họ tên" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="relationship"><i class="fas fa-users"></i> Mối quan hệ</label>
+                                    <select id="relationship" name="relationship" class="elegant-select">
+                                        <option value="">Chọn mối quan hệ</option>
+                                        <option value="family">Gia đình, họ hàng</option>
+                                        <option value="friend">Bạn bè</option>
+                                        <option value="teacher">Thầy cô giáo</option>
+                                        <option value="alumni">Cựu học sinh</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message"><i class="fas fa-edit"></i> Lời chúc của bạn</label>
+                                <textarea id="message" name="message" placeholder="Viết lời chúc của bạn ở đây..." rows="5" required></textarea>
+                            </div>
+                            
+                            <div class="form-submit">
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-paper-plane"></i> Gửi lời chúc
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="wishes-display">
+                        <h4><i class="fas fa-gift"></i> Lời chúc gần đây</h4>
+                        <div class="wishes-list" id="wishes-container">
+                            <!-- Lời chúc sẽ được hiển thị ở đây -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span class="school-name">THPT Phạm Văn Đồng</span>
+                </div>
+                
+                <div class="footer-info">
+                    <p>Lớp 12A1 - Niên khóa 2023-2026</p>
+                    <p>Thiệp được tạo với <i class="fas fa-heart heart-icon"></i> bởi học sinh tốt nghiệp</p>
+                </div>
+                
+                <div class="footer-contact">
+                    <p><i class="fas fa-phone"></i> Liên hệ: 03828121919</p>
+                    <p><i class="fas fa-envelope"></i> Email: [Email liên hệ]</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 - Thiệp mời tốt nghiệp THPT. Mọi quyền được bảo lưu.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Phần tử audio cho nhạc nền -->
+    <audio id="bg-music" loop>
+        <source src="assets/music/graduation.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát nhạc.
+    </audio>
+
+    <script src="js/effects.js"></script>
+    <script src="js/music.js"></script>
+    <script src="js/album.js"></script>
+    <script src="js/wishes.js"></script>
+</body>
+</html>
