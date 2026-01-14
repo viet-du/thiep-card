@@ -133,3 +133,63 @@ window.addEventListener('resize', function() {
         setTimeout(optimizeAlbumForMobile, 500);
     }
 });
+// Tối ưu ảnh cho iPhone
+function optimizeForIPhone() {
+    if (!isMobile) return;
+    
+    // Kiểm tra nếu là iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (!isIOS) return;
+    
+    const photoItems = document.querySelectorAll('.photo-item');
+    const albumContainer = document.querySelector('.photo-album');
+    
+    // Điều chỉnh kích thước cho iOS
+    photoItems.forEach(item => {
+        item.style.cssText = `
+            min-width: 85vw !important;
+            height: 220px !important;
+            margin: 0 8px !important;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        `;
+        
+        const img = item.querySelector('img');
+        if (img) {
+            img.style.cssText = `
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+                display: block !important;
+                pointer-events: none;
+            `;
+        }
+    });
+    
+    // Điều chỉnh container
+    if (albumContainer) {
+        albumContainer.style.cssText = `
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            padding: 10px 5px;
+            margin: 0 -5px;
+        `;
+    }
+}
+
+// Gọi hàm khi load và resize
+document.addEventListener('DOMContentLoaded', function() {
+    if (isMobile) {
+        setTimeout(optimizeForIPhone, 500);
+    }
+});
+
+window.addEventListener('resize', function() {
+    if (checkMobileDevice() && isMobile) {
+        setTimeout(optimizeForIPhone, 300);
+    }
+});
