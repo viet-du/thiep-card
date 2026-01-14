@@ -1,93 +1,87 @@
-// auto-slide.js - Tự động lướt ảnh
+// Tự động lướt ảnh với hiệu suất tốt hơn
 document.addEventListener('DOMContentLoaded', function() {
-    let autoSlideInterval;
     let isAutoSliding = true;
-    let currentSlide = 0;
-    const totalSlides = document.querySelectorAll('.photo-item').length;
-    const slideDuration = 3000; // 3 giây mỗi ảnh
+    let autoSlideTimer;
+    const slideDuration = 4000; // 4 giây
+    
+    // Kiểm tra xem album đã sẵn sàng chưa
+    function initAutoSlide() {
+        const albumItems = document.querySelectorAll('.photo-item');
+        if (albumItems.length > 0) {
+            startAutoSlide();
+            setupEventListeners();
+        } else {
+            // Thử lại sau 500ms nếu album chưa sẵn sàng
+            setTimeout(initAutoSlide, 500);
+        }
+    }
     
     function startAutoSlide() {
-        if (autoSlideInterval) clearInterval(autoSlideInterval);
+        clearTimeout(autoSlideTimer);
         
-        autoSlideInterval = setInterval(() => {
-            if (isAutoSliding && totalSlides > 0) {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                scrollToSlide(currentSlide);
+        if (!isAutoSliding) return;
+        
+        autoSlideTimer = setTimeout(() => {
+            const nextBtn = document.querySelector('.right-control');
+            if (nextBtn && isAutoSliding) {
+                // Kích hoạt sự kiện click của nút next
+                nextBtn.click();
+                startAutoSlide(); // Lặp lại
             }
         }, slideDuration);
     }
     
-    function scrollToSlide(slideIndex) {
-        const track = document.getElementById('photo-track');
-        if (!track) return;
-        
-        const photoWidth = 220 + 25; // width + gap
-        const scrollPosition = slideIndex * photoWidth;
-        
-        // Sử dụng transform để cuộn mượt
-        track.style.transition = 'transform 0.5s ease';
-        track.style.transform = `translateX(-${scrollPosition}px)`;
-        
-        // Cập nhật indicator
-        updateSlideIndicator(slideIndex);
+    function pauseAutoSlide() {
+        isAutoSliding = false;
+        clearTimeout(autoSlideTimer);
     }
     
-    function updateSlideIndicator(index) {
-        const indicators = document.querySelectorAll('.indicator');
-        indicators.forEach((indicator, i) => {
-            if (i === index) {
-                indicator.classList.add('active');
-            } else {
-                indicator.classList.remove('active');
+    function resumeAutoSlide() {
+        isAutoSliding = true;
+        startAutoSlide();
+    }
+    
+    function setupEventListeners() {
+        // Dừng auto slide khi user tương tác
+        const albumContainer = document.querySelector('.photo-album');
+        const photoItems = document.querySelectorAll('.photo-item');
+        const controls = document.querySelectorAll('.album-control');
+        
+        if (albumContainer) {
+            albumContainer.addEventListener('touchstart', pauseAutoSlide);
+            albumContainer.addEventListener('mousedown', pauseAutoSlide);
+            albumContainer.addEventListener('wheel', pauseAutoSlide);
+        }
+        
+        photoItems.forEach(item => {
+            item.addEventListener('click', pauseAutoSlide);
+            item.addEventListener('mouseenter', pauseAutoSlide);
+        });
+        
+        controls.forEach(control => {
+            control.addEventListener('click', pauseAutoSlide);
+        });
+        
+        // Tiếp tục auto slide sau khi không tương tác
+        const resumeEvents = ['touchend', 'mouseup', 'mouseleave'];
+        resumeEvents.forEach(event => {
+            if (albumContainer) {
+                albumContainer.addEventListener(event, () => {
+                    setTimeout(resumeAutoSlide, 3000); // Đợi 3 giây rồi tiếp tục
+                });
             }
         });
     }
     
-    // Dừng auto slide khi user tương tác
-    function stopAutoSlideTemporarily() {
-        isAutoSliding = false;
-        clearInterval(autoSlideInterval);
-        
-        // Tiếp tục sau 5 giây không tương tác
-        setTimeout(() => {
-            isAutoSliding = true;
-            startAutoSlide();
-        }, 5000);
-    }
-    
-    // Khởi động auto slide khi album được tạo
-    function initAutoSlide() {
-        const checkAlbum = setInterval(() => {
-            if (document.querySelectorAll('.photo-item').length > 0) {
-                clearInterval(checkAlbum);
-                startAutoSlide();
-                
-                // Thêm sự kiện dừng khi user tương tác
-                const track = document.getElementById('photo-track');
-                if (track) {
-                    track.addEventListener('touchstart', stopAutoSlideTemporarily);
-                    track.addEventListener('mousedown', stopAutoSlideTemporarily);
-                    track.addEventListener('wheel', stopAutoSlideTemporarily);
-                }
-                
-                // Các nút điều khiển
-                const controls = document.querySelectorAll('.album-control');
-                controls.forEach(control => {
-                    control.addEventListener('click', stopAutoSlideTemporarily);
-                });
-            }
-        }, 500);
-    }
-    
-    // Bắt đầu khi trang tải xong
-    setTimeout(initAutoSlide, 2000);
-    
     // Dừng auto slide khi tab không active
     document.addEventListener('visibilitychange', function() {
         if (document.hidden) {
-            clearInterval(autoSlideInterval);
+            pauseAutoSlide();
         } else {
-            startAutoSlide();
+            resumeAutoSlide();
         }
     });
+    
+    // Bắt đầu auto slide
+    setTimeout(initAutoSlide, 2000);
 });
