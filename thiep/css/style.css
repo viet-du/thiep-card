@@ -2023,54 +2023,77 @@ body {
 }
 
 /* ===== FIX CHO IPHONE - ALBUM ẢNH ===== */
-@media only screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
-    /* Riêng cho iPhone và thiết bị Retina */
+/* ===== FIX ALBUM TRÊN MOBILE ===== */
+@media (max-width: 768px) {
+    /* Điều chỉnh kích thước ảnh cho mobile */
+    .photo-item {
+        min-width: 85vw !important;
+        height: 220px !important; /* Giảm từ 280px */
+        margin: 0 5px !important;
+    }
+    
+    /* Đảm bảo ảnh hiển thị đúng tỷ lệ */
+    .photo-item img {
+        object-fit: cover !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+    }
+    
+    /* Tăng kích thước nút điều khiển cho dễ bấm */
+    .album-control {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Điều chỉnh thêm cho màn hình nhỏ */
+    .photo-item {
+        min-width: 85vw !important; /* Giảm từ 90vw */
+        height: 200px !important; /* Giảm từ 250px */
+    }
+    
+    .album-control {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 16px !important;
+    }
+}
+
+/* Fix riêng cho iPhone */
+@supports (-webkit-touch-callout: none) {
     .photo-album {
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x mandatory;
         overscroll-behavior-x: none;
     }
     
-    .photo-track {
-        gap: 10px !important;
-        padding: 0 10px !important;
-    }
-    
     .photo-item {
-        min-width: 85vw !important; /* Giảm từ 90vw xuống 85vw */
-        height: 220px !important; /* Giảm chiều cao */
+        min-width: 85vw !important;
+        height: 220px !important;
         margin: 0 5px !important;
-        flex-shrink: 0;
         scroll-snap-align: center;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
     .photo-item img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        display: block !important;
-        pointer-events: none;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
         -webkit-touch-callout: none;
-        -webkit-user-select: none;
         user-select: none;
-    }
-    
-    /* Tắt hiệu ứng hover trên mobile */
-    .photo-item:hover,
-    .photo-item:active {
-        transform: none !important;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
     }
 }
 
-/* Fix riêng cho iPhone nhỏ hơn */
-@media only screen and (max-width: 375px) {
-    .photo-item {
-        min-width: 82vw !important;
-        height: 200px !important;
+/* Tắt hiệu ứng hover trên mobile */
+@media (hover: none) and (pointer: coarse) {
+    .photo-item:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .photo-item:active {
+        transform: scale(1.02) !important;
     }
 }
 
