@@ -420,7 +420,7 @@ body {
     font-weight: 500;
 }
 
-/* Album ảnh - ĐÃ GỘP VÀ SỬA LẠI */
+/* ========== ALBUM ẢNH - ĐÃ SỬA HOÀN CHỈNH CHO IPHONE ========== */
 .album-section {
     width: 100%;
     overflow: hidden;
@@ -457,6 +457,7 @@ body {
     margin-bottom: 30px;
 }
 
+/* Album container - ĐÃ SỬA */
 .photo-album {
     flex: 1;
     overflow-x: auto;
@@ -468,15 +469,17 @@ body {
     width: 100%;
     max-width: 100%;
     box-shadow: inset 0 0 20px rgba(218, 165, 32, 0.05);
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; /* Quan trọng cho iOS */
+    scroll-snap-type: x mandatory; /* Dừng đúng vị trí */
     cursor: grab;
+    touch-action: pan-x; /* Chỉ pan ngang */
 }
 
 .photo-album:active {
     cursor: grabbing;
 }
 
+/* Track chứa ảnh */
 .photo-track {
     display: flex;
     gap: 15px;
@@ -485,16 +488,17 @@ body {
     will-change: transform;
 }
 
+/* Item ảnh - Kích thước GIỐNG ảnh đại diện (220x280px) */
 .photo-item {
-    min-width: 250px;
-    height: 320px;
+    min-width: 220px; /* Giống ảnh đại diện */
+    height: 280px; /* Giống ảnh đại diện */
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
     position: relative;
     flex-shrink: 0;
-    scroll-snap-align: start;
+    scroll-snap-align: center; /* Quan trọng cho iOS */
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
@@ -517,11 +521,12 @@ body {
     pointer-events: none;
 }
 
+/* Ảnh bên trong - object-fit cover để không bị méo */
 .photo-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
 }
 
 .photo-caption {
@@ -547,13 +552,13 @@ body {
     transform: translateY(0);
 }
 
-/* Mobile controls */
+/* Nút điều khiển - ĐÃ SỬA LUÔN HIỂN THỊ */
 .album-control {
     width: 44px;
     height: 44px;
     background: linear-gradient(135deg, #FFD700, #DAA520);
     border-radius: 50%;
-    display: flex;
+    display: flex !important; /* Quan trọng: luôn hiển thị */
     align-items: center;
     justify-content: center;
     color: #fff;
@@ -567,6 +572,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     -webkit-tap-highlight-color: transparent;
+    opacity: 0.9;
 }
 
 .left-control { left: 5px; }
@@ -1109,51 +1115,7 @@ body {
     font-size: 14px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-
-    /* Section gọn hơn */
-    .wishes-section {
-        padding: 20px 10px;
-    }
-
-    /* Form & danh sách lời chúc full width */
-    .wishes-form,
-    .wishes-display {
-        max-width: 100%;
-        padding: 20px;
-        margin: 0 auto;
-    }
-
-    /* Ép 1 cột tuyệt đối */
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    /* Input đủ lớn – Safari KHÔNG zoom */
-    .form-group input,
-    .form-group textarea,
-    .elegant-select {
-        font-size: 16px !important;
-        padding: 14px;
-    }
-
-    /* Nút gửi full width cho dễ bấm */
-    .submit-btn {
-        width: 100%;
-        max-width: none;
-        font-size: 16px;
-        padding: 15px;
-    }
-
-    /* Danh sách lời chúc cuộn mượt */
-    .wishes-list {
-        max-height: 280px;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-}
+/* ========== RESPONSIVE - ĐÃ SỬA PHẦN ALBUM CHO IPHONE ========== */
 
 @media (max-width: 768px) {
     .profile-container {
@@ -1167,11 +1129,6 @@ body {
     .detail-item { flex-direction: column; text-align: center; align-items: center; }
     .music-buttons { flex-direction: column; width: 100%; }
     .music-btn { width: 100%; justify-content: center; }
-    .album-container { flex-direction: column; }
-    .album-control { width: 100%; border-radius: 10px; height: 40px; }
-    .left-control { order: 1; }
-    .photo-album { order: 2; width: 100%; }
-    .right-control { order: 3; }
     .footer-content { grid-template-columns: 1fr; text-align: center; }
     .invitation-content, .calendar-section, .calendar-container { padding: 25px; }
     .bird { font-size: 20px !important; }
@@ -1183,42 +1140,78 @@ body {
     .calendar-table th, .calendar-table td { padding: 8px 2px; font-size: 14px; height: 40px; }
     .calendar-table td.highlight { font-size: 15px; }
     
-    /* Album mobile fixes */
+    /* ===== ALBUM FIXES CHO MOBILE ===== */
     .album-section {
         padding: 15px 5px;
     }
     
     .photo-album {
         padding: 10px 5px;
-        margin: 0 5px;
-        overflow: visible;
+        margin: 0;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: none;
     }
     
     .photo-track {
-        gap: 10px;
-        padding: 0 5px;
+        gap: 12px;
+        padding: 0 12px;
     }
     
+    /* QUAN TRỌNG: Kích thước GIỮ NGUYÊN như desktop trên mobile */
     .photo-item {
-        min-width: 85vw;
-        height: 280px;
-        margin: 0 5px;
+        min-width: 220px !important; /* Giữ nguyên kích thước ảnh đại diện */
+        height: 280px !important;
+        margin: 0;
+        scroll-snap-align: center;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        flex: 0 0 auto; /* Quan trọng: không co giãn */
     }
     
+    .photo-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        pointer-events: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    
+    /* Nút điều khiển - luôn hiển thị trên mobile */
     .album-control {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 18px !important;
+        display: flex !important;
+        opacity: 0.9;
     }
     
-    .left-control { left: -5px; }
-    .right-control { right: -5px; }
-    .album-control { display: flex !important; }
+    .left-control { 
+        left: 10px !important; 
+        display: flex !important;
+    }
+    
+    .right-control { 
+        right: 10px !important; 
+        display: flex !important;
+    }
+    
+    /* Tắt hiệu ứng hover trên mobile */
+    .photo-item:hover,
+    .photo-item:active {
+        transform: none !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    }
     
     /* Wishes mobile fixes */
     .wishes-section {
         margin: 15px 0;
         border-radius: 15px;
+        padding: 20px 10px;
     }
     
     .section-header {
@@ -1268,7 +1261,7 @@ body {
     .form-group textarea,
     .elegant-select {
         padding: 12px;
-        font-size: 14px;
+        font-size: 16px !important; /* Quan trọng: không zoom trên iOS */
         border-radius: 8px;
     }
     
@@ -1334,8 +1327,6 @@ body {
     .profile-img { width: 180px; height: 230px; }
     .graduate-name { font-size: 28px; }
     .elegant-title { font-size: 24px; }
-    .photo-item { min-width: 180px; height: 220px; }
-    .album-control { width: 40px; height: 40px; font-size: 18px; }
     #main-content { padding: 10px; }
     .header, .invitation-card, .album-section, .music-section, .wishes-section, .calendar-section {
         border-radius: 15px;
@@ -1360,10 +1351,10 @@ body {
     .month-year h2 { font-size: 22px; }
     .month-year .year { font-size: 16px; }
     
-    /* Album mobile fixes */
+    /* ===== ALBUM FIXES CHO MÀN HÌNH NHỎ ===== */
     .photo-item {
-        min-width: 90vw;
-        height: 250px;
+        min-width: 210px !important; /* Giảm chút ít cho màn hình nhỏ */
+        height: 270px !important;
     }
     
     .photo-caption {
@@ -1372,13 +1363,12 @@ body {
     }
     
     .album-control {
-        width: 36px;
-        height: 36px;
-        font-size: 14px;
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 16px !important;
     }
     
-    /* Wishes mobile fixes */
-    /* ===== CHỈNH FORM GỬI LỜI CHÚC CĂN GIỮA ===== */
+    /* Wishes fixes cho màn hình nhỏ */
     .wishes-section {
         display: flex;
         flex-direction: column;
@@ -1404,7 +1394,7 @@ body {
         width: 100%;
         max-width: 700px;
         margin: 0 auto;
-        padding: 40px;
+        padding: 25px;
         background: linear-gradient(135deg, #ffffff 0%, #fcf9f5 100%);
         border-radius: 20px;
         box-shadow: 0 20px 40px rgba(218, 165, 32, 0.15);
@@ -1415,51 +1405,11 @@ body {
     .wishes-display {
         width: 100%;
         max-width: 700px;
-        margin: 40px auto 0;
-        padding: 30px;
+        margin: 25px auto 0;
+        padding: 20px;
         background: linear-gradient(135deg, #fcf9f5 0%, #f5f0e6 100%);
         border-radius: 20px;
         border: 2px solid rgba(218, 165, 32, 0.1);
-    }
-    
-    /* Ghi đè CSS cũ */
-    .wishes-container {
-        grid-template-columns: 1fr !important;
-        padding: 0 !important;
-    }
-    
-    .wishes-form, .wishes-display {
-        max-width: 700px !important;
-        width: 100% !important;
-        margin: 0 auto !important;
-    }
-    
-    /* Media query cho tablet */
-    @media (max-width: 768px) {
-        .wishes-form {
-            padding: 30px 25px;
-            max-width: 95% !important;
-        }
-        
-        .wishes-display {
-            padding: 25px 20px;
-            max-width: 95% !important;
-            margin-top: 30px !important;
-        }
-    }
-    
-    /* Media query cho mobile */
-    @media (max-width: 480px) {
-        .wishes-form {
-            padding: 25px 20px;
-            max-width: 100% !important;
-        }
-        
-        .wishes-display {
-            padding: 20px 15px;
-            max-width: 100% !important;
-            margin-top: 25px !important;
-        }
     }
     
     .form-submit {
@@ -1468,34 +1418,35 @@ body {
     }
     
     .submit-btn {
-        padding: 20px 45px;
+        padding: 16px 30px;
         background: linear-gradient(135deg, #FFD700 0%, #DAA520 100%);
         color: white;
         border: none;
-        border-radius: 15px;
-        font-size: 18px;
+        border-radius: 12px;
+        font-size: 16px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 10px;
         font-family: inherit;
-        letter-spacing: 1px;
-        min-width: 200px;
+        letter-spacing: 0.5px;
+        min-width: 180px;
         box-shadow: 0 10px 25px rgba(218, 165, 32, 0.3);
         position: relative;
         overflow: hidden;
+        width: 100%;
     }
     
     .submit-btn:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 35px rgba(218, 165, 32, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(218, 165, 32, 0.4);
     }
     
     .submit-btn:active {
-        transform: translateY(-2px);
+        transform: translateY(-1px);
     }
     
     .submit-btn::after {
@@ -1518,354 +1469,84 @@ body {
         0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
         100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
-    
-    /* Hiệu ứng placeholder */
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-        color: #a1886f;
-        opacity: 0.7;
+}
+
+/* ========== FIX ĐẶC BIỆT CHO SAFARI iOS ========== */
+@supports (-webkit-touch-callout: none) {
+    /* Safari iOS specific fixes */
+    .photo-album {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        overscroll-behavior-x: none;
     }
     
-    /* Hiệu ứng khi chọn option */
-    .elegant-select option {
-        padding: 12px;
-        font-size: 16px;
+    .photo-item {
+        -webkit-transform: translateZ(0); /* Force hardware acceleration */
+        transform: translateZ(0);
+        scroll-snap-align: center;
+        -webkit-tap-highlight-color: rgba(218, 165, 32, 0.1);
     }
     
-    /* ===== HIỂN THỊ LỜI CHÚC ===== */
-    .wishes-display {
-        max-width: 700px;
-        margin: 40px auto 0;
-        padding: 30px;
-        background: linear-gradient(135deg, #fcf9f5 0%, #f5f0e6 100%);
-        border-radius: 20px;
-        border: 2px solid rgba(218, 165, 32, 0.1);
+    .photo-item img {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-user-drag: none;
     }
     
-    .wishes-display h4 {
-        color: #8B7355;
-        font-size: 22px;
-        font-weight: 600;
-        margin-bottom: 25px;
-        text-align: center;
-        padding-bottom: 15px;
-        border-bottom: 3px solid #DAA520;
-        position: relative;
-    }
-    
-    .wishes-display h4::after {
+    /* Tăng kích thước touch area cho nút trên iOS */
+    .album-control::before {
         content: '';
         position: absolute;
-        bottom: -3px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(to right, #FFD700, #DAA520);
-        border-radius: 2px;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        background: transparent;
+        z-index: -1;
+    }
+    
+    /* Fix cho iOS không nhận sự kiện click */
+    .photo-item {
+        cursor: pointer;
+    }
+    
+    /* Ngăn zoom trên input iOS */
+    .form-group input,
+    .form-group textarea,
+    .elegant-select {
+        font-size: 16px !important;
+        max-height: 44px; /* Tối ưu cho iOS */
     }
 }
 
-/* Hiệu ứng cho touch */
+/* ========== FIX CHO CÁC THIẾT BỊ TOUCH ========== */
 @media (hover: none) and (pointer: coarse) {
+    /* Thiết bị touch screen */
     .photo-item:hover {
         transform: none !important;
         box-shadow: none !important;
     }
-
+    
     .photo-item:active {
-        transform: scale(1.02);
-    }
-}
-
-/* Fix vuốt album mượt – không bị Safari scale */
-.photo-album {
-    overflow-x: auto;
-    overflow-y: hidden;
-    touch-action: pan-x;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Khoá transform để Safari không render sai */
-.photo-item {
-    transform: translateZ(0);
-    will-change: auto;
-}
-
-/* Đảm bảo ảnh KHÔNG bị zoom / crop sai */
-.photo-item img {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover !important;
-    display: block !important;
-    pointer-events: none;
-}
-/* Fix riêng cho iOS */
-@supports (-webkit-touch-callout: none) {
-    .form-group input,
-    .form-group textarea,
-    .elegant-select {
-        font-size: 16px;
-    }
-}
-
-@supports (-webkit-touch-callout: none) {
-    input,
-    textarea,
-    select {
-        font-size: 16px !important;
-    }
-}
-
-/* ===== PHẦN BẢNG LỜI CHÚC PHÓNG TO ===== */
-.wishes-display {
-    width: 100%;
-    max-width: 900px !important; /* Tăng kích thước lên 900px */
-    margin: 40px auto 0 !important;
-    padding: 35px 40px !important;
-    background: linear-gradient(135deg, #ffffff 0%, #fcf9f5 100%) !important;
-    border-radius: 25px !important;
-    border: 2px solid rgba(218, 165, 32, 0.15) !important;
-    box-shadow: 0 25px 50px rgba(218, 165, 32, 0.1) !important;
-    position: relative !important;
-    overflow: hidden !important;
-}
-
-/* Thêm viền trang trí */
-.wishes-display::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: linear-gradient(90deg, #FFD700, #DAA520, #FFD700);
-    z-index: 1;
-}
-
-/* Tiêu đề bảng lời chúc */
-.wishes-display h4 {
-    color: #8B7355 !important;
-    font-size: 24px !important;
-    font-weight: 600 !important;
-    margin-bottom: 30px !important;
-    text-align: center !important;
-    padding-bottom: 15px !important;
-    border-bottom: 2px solid rgba(218, 165, 32, 0.2) !important;
-    position: relative !important;
-    letter-spacing: 1px !important;
-}
-
-.wishes-display h4::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(to right, #FFD700, #DAA520);
-    border-radius: 2px;
-}
-
-/* Danh sách lời chúc - phóng to */
-.wishes-list {
-    max-height: 450px !important; /* Tăng chiều cao */
-    overflow-y: auto;
-    padding-right: 10px;
-    box-sizing: border-box;
-}
-
-.wishes-list::-webkit-scrollbar { 
-    width: 8px; 
-}
-
-.wishes-list::-webkit-scrollbar-track { 
-    background: #f5f0e6; 
-    border-radius: 4px; 
-}
-
-.wishes-list::-webkit-scrollbar-thumb { 
-    background: linear-gradient(to bottom, #FFD700, #DAA520); 
-    border-radius: 4px; 
-    border: 2px solid #f5f0e6;
-}
-
-/* Mỗi lời chúc - phóng to hơn */
-.wish-item {
-    background: #fff !important;
-    padding: 25px 30px !important;
-    border-radius: 15px !important;
-    margin-bottom: 20px !important;
-    border-left: 6px solid #DAA520 !important;
-    box-shadow: 0 8px 20px rgba(218, 165, 32, 0.08) !important;
-    transition: all 0.3s ease !important;
-    position: relative !important;
-    overflow: hidden !important;
-}
-
-.wish-item:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 12px 25px rgba(218, 165, 32, 0.15) !important;
-}
-
-/* Thêm background pattern nhẹ */
-.wish-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.03) 1px, transparent 1px),
-        radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
-    background-size: 20px 20px;
-    z-index: 0;
-}
-
-/* Nội dung lời chúc phóng to */
-.wish-sender {
-    color: #5a4a42 !important;
-    font-weight: 700 !important;
-    font-size: 18px !important;
-    margin-bottom: 10px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-.wish-sender i {
-    color: #DAA520 !important;
-    font-size: 16px !important;
-}
-
-.wish-relationship {
-    background: linear-gradient(135deg, #FFD700, #DAA520) !important;
-    color: #fff !important;
-    font-size: 12px !important;
-    padding: 5px 12px !important;
-    border-radius: 20px !important;
-    margin-left: auto !important;
-    white-space: nowrap !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.5px !important;
-    box-shadow: 0 3px 8px rgba(218, 165, 32, 0.2) !important;
-}
-
-.wish-message {
-    color: #5a4a42 !important;
-    line-height: 1.6 !important;
-    font-size: 16px !important;
-    margin-top: 15px !important;
-    padding: 15px !important;
-    background: rgba(249, 245, 240, 0.5) !important;
-    border-radius: 10px !important;
-    border: 1px solid rgba(218, 165, 32, 0.1) !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-.wish-time {
-    color: #8B7355 !important;
-    font-size: 13px !important;
-    text-align: right !important;
-    margin-top: 15px !important;
-    font-weight: 500 !important;
-    position: relative !important;
-    z-index: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: 8px !important;
-}
-
-.wish-time i {
-    color: #DAA520 !important;
-    font-size: 12px !important;
-}
-
-/* Responsive cho bảng lớn */
-@media (max-width: 992px) {
-    .wishes-display {
-        max-width: 95% !important;
-        padding: 30px !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .wishes-display {
-        max-width: 100% !important;
-        padding: 25px 20px !important;
-        margin-top: 30px !important;
+        transform: scale(1.02) !important;
+        transition: transform 0.1s ease;
     }
     
-    .wishes-list {
-        max-height: 350px !important;
+    .album-control:active {
+        transform: translateY(-50%) scale(0.9) !important;
     }
     
-    .wish-item {
-        padding: 20px !important;
+    .detail-item:hover {
+        transform: none !important;
     }
     
-    .wish-sender {
-        font-size: 16px !important;
-        flex-wrap: wrap !important;
-    }
-    
-    .wish-relationship {
-        margin-left: 0 !important;
-        margin-top: 8px !important;
-        font-size: 11px !important;
-    }
-    
-    .wish-message {
-        font-size: 15px !important;
-        padding: 12px !important;
+    .submit-btn:hover {
+        transform: none !important;
     }
 }
 
-@media (max-width: 480px) {
-    .wishes-display h4 {
-        font-size: 20px !important;
-    }
-    
-    .wish-item {
-        padding: 18px 15px !important;
-    }
-    
-    .wish-message {
-        font-size: 14px !important;
-    }
-}
-
-/* Hiệu ứng khi không có lời chúc nào */
-.wishes-list:empty::before {
-    content: 'Chưa có lời chúc nào. Hãy là người đầu tiên gửi lời chúc nhé!' !important;
-    display: block !important;
-    text-align: center !important;
-    color: #a1886f !important;
-    font-style: italic !important;
-    padding: 60px 20px !important;
-    font-size: 18px !important;
-    background: rgba(249, 245, 240, 0.5) !important;
-    border-radius: 15px !important;
-    border: 2px dashed rgba(218, 165, 32, 0.2) !important;
-}
-
-.wishes-list:empty::after {
-    content: '🎓' !important;
-    display: block !important;
-    font-size: 32px !important;
-    margin-top: 15px !important;
-    text-align: center !important;
-    opacity: 0.5 !important;
-}
-/* Sticker nón tốt nghiệp bay xung quanh ảnh */
+/* ========== STICKER VÀ HOA TRANG TRÍ ========== */
 .graduation-stickers {
     position: absolute;
     top: 0;
@@ -2020,92 +1701,4 @@ body {
 .no-wishes-message p {
     font-size: 16px;
     font-style: italic;
-}
-
-/* ===== FIX CHO IPHONE - ALBUM ẢNH ===== */
-/* ===== FIX ALBUM TRÊN MOBILE ===== */
-@media (max-width: 768px) {
-    /* Điều chỉnh kích thước ảnh cho mobile */
-    .photo-item {
-        min-width: 85vw !important;
-        height: 220px !important; /* Giảm từ 280px */
-        margin: 0 5px !important;
-    }
-    
-    /* Đảm bảo ảnh hiển thị đúng tỷ lệ */
-    .photo-item img {
-        object-fit: cover !important;
-        width: 100% !important;
-        height: 100% !important;
-        display: block !important;
-    }
-    
-    /* Tăng kích thước nút điều khiển cho dễ bấm */
-    .album-control {
-        width: 44px !important;
-        height: 44px !important;
-        font-size: 18px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Điều chỉnh thêm cho màn hình nhỏ */
-    .photo-item {
-        min-width: 85vw !important; /* Giảm từ 90vw */
-        height: 200px !important; /* Giảm từ 250px */
-    }
-    
-    .album-control {
-        width: 40px !important;
-        height: 40px !important;
-        font-size: 16px !important;
-    }
-}
-
-/* Fix riêng cho iPhone */
-@supports (-webkit-touch-callout: none) {
-    .photo-album {
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        overscroll-behavior-x: none;
-    }
-    
-    .photo-item {
-        min-width: 85vw !important;
-        height: 220px !important;
-        margin: 0 5px !important;
-        scroll-snap-align: center;
-    }
-    
-    .photo-item img {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-touch-callout: none;
-        user-select: none;
-    }
-}
-
-/* Tắt hiệu ứng hover trên mobile */
-@media (hover: none) and (pointer: coarse) {
-    .photo-item:hover {
-        transform: none !important;
-        box-shadow: none !important;
-    }
-    
-    .photo-item:active {
-        transform: scale(1.02) !important;
-    }
-}
-
-/* Fix cho Safari iOS */
-@supports (-webkit-touch-callout: none) {
-    .photo-album {
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
-    }
-    
-    .photo-item img {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-    }
 }
