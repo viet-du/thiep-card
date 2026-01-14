@@ -43,6 +43,11 @@ function createPhotoAlbum() {
         const photoItem = document.createElement('div');
         photoItem.classList.add('photo-item');
         photoItem.dataset.index = index;
+        // Kiểm tra nếu là mobile
+        if (isMobile) {
+            photoItem.style.minWidth = '85vw';
+            photoItem.style.height = '220px';
+        }
         
         // Thêm sự kiện click
         photoItem.addEventListener('click', () => {
@@ -61,7 +66,15 @@ function createPhotoAlbum() {
         img.src = photo.src;
         img.alt = photo.alt;
         img.loading = 'lazy';
-        
+        if (isMobile) {
+            img.style.cssText = `
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                -webkit-touch-callout: none;
+            `;
+        }
         // Sửa lỗi ảnh không tải
         img.onerror = function() {
             const color = 'DAA520';
