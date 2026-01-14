@@ -1,4 +1,11 @@
 // Danh sách ảnh mẫu với chú thích
+let touchStartX = 0;
+let touchEndX = 0;
+let isDragging = false;
+let startPosition = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
+let animationID = 0;
 const graduationPhotos = [
     { 
         src: 'assets/image/03e19505-e644-4bb5-b492-e938a586c093.jpg', 
@@ -130,6 +137,171 @@ document.addEventListener('DOMContentLoaded', function() {
         .photo-item:hover .photo-caption {
             opacity: 1;
             transform: translateY(0);
+        }
+    `;
+    document.head.appendChild(style);
+});
+// Thêm hàm xử lý touch/swipe
+function setupTouchEvents() {
+    const track = document.getElementById('photo-track');
+    
+    // Touch events cho mobile
+    track.addEventListener('touchstart', touchStart);
+    track.addEventListener('touchmove', touchMove);
+    track.addEventListener('touchend', touchEnd);
+    
+    // Mouse events cho desktop
+    track.addEventListener('mousedown', mouseDown);
+    track.addEventListener('mousemove', mouseMove);
+    track.addEventListener('mouseup', mouseUp);
+    track.addEventListener('mouseleave', mouseLeave);
+}
+
+function touchStart(event) {
+    touchStartX = event.touches[0].clientX;
+    startPosition = touchStartX;
+    isDragging = true;
+    animationID = requestAnimationFrame(animation);
+    track.classList.add('grabbing');
+}
+
+function touchMove(event) {
+    if (!isDragging) return;
+    touchEndX = event.touches[0].clientX;
+    const diff = touchEndX - touchStartX;
+    touchStartX = touchEndX;
+    
+    // Di chuyển ảnh theo swipe
+    currentTranslate += diff * 0.5;
+    updateTrackPosition();
+}
+
+function touchEnd() {
+    isDragging = false;
+    cancelAnimationFrame(animationID);
+    track.classList.remove('grabbing');
+    
+    // Tính toán swipe để chuyển ảnh
+    const diff = touchEndX - startPosition;
+    if (Math.abs(diff) > 50) { // Ngưỡng swipe
+        if (diff > 0) {
+            scrollAlbum(-1); // Swipe sang phải -> lùi
+        } else {
+            scrollAlbum(1); // Swipe sang trái -> tiến
+        }
+    } else {
+        // Nếu swipe ngắn, quay về vị trí cũ
+        currentTranslate = prevTranslate;
+        updateTrackPosition();
+    }
+}
+
+// Tương tự cho mouse events
+function mouseDown(event) {
+    startPosition = event.clientX;
+    isDragging = true;
+    animationID = requestAnimationFrame(animation);
+    track.classList.add('grabbing');
+}
+
+function mouseMove(event) {
+    if (!isDragging) return;
+    const currentPosition = event.clientX;
+    const diff = currentPosition - startPosition;
+    startPosition = currentPosition;
+    
+    currentTranslate += diff * 0.5;
+    updateTrackPosition();
+}
+
+function mouseUp(event) {
+    isDragging = false;
+    cancelAnimationFrame(animationID);
+    track.classList.remove('grabbing');
+    
+    const diff = event.clientX - startPosition;
+    if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+            scrollAlbum(-1);
+        } else {
+            scrollAlbum(1);
+        }
+    } else {
+        currentTranslate = prevTranslate;
+        updateTrackPosition();
+    }
+}
+
+function mouseLeave() {
+    if (isDragging) {
+        isDragging = false;
+        cancelAnimationFrame(animationID);
+        currentTranslate = prevTranslate;
+        updateTrackPosition();
+        track.classList.remove('grabbing');
+    }
+}
+
+function animation() {
+    if (isDragging) {
+        updateTrackPosition();
+        requestAnimationFrame(animation);
+    }
+}
+
+function updateTrackPosition() {
+    const track = document.getElementById('photo-track');
+    track.style.transform = `translateX(${currentTranslate}px)`;
+}
+
+// Sửa lại hàm scrollAlbum để cập nhật currentTranslate
+function scrollAlbum(direction) {
+    const totalPhotos = graduationPhotos.length;
+    
+    // Cập nhật chỉ số ảnh hiện tại
+    currentPhotoIndex += direction;
+    
+    // Giới hạn chỉ số
+    if (currentPhotoIndex < 0) currentPhotoIndex = 0;
+    if (currentPhotoIndex > totalPhotos - photosPerView) {
+        currentPhotoIndex = totalPhotos - photosPerView;
+    }
+    
+    // Tính toán vị trí cuộn
+    const scrollPosition = currentPhotoIndex * 245; // 220px + 25px gap
+    currentTranslate = -scrollPosition;
+    prevTranslate = currentTranslate;
+    
+    updateTrackPosition();
+    updateAlbumIndicator();
+}
+
+// Cập nhật DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    createPhotoAlbum();
+    updateAlbumIndicator();
+    setupTouchEvents(); // Thêm dòng này
+    
+    // Thêm CSS cho touch/swipe
+    const style = document.createElement('style');
+    style.textContent = `
+        .photo-track {
+            cursor: grab;
+            user-select: none;
+        }
+        
+        .photo-track.grabbing {
+            cursor: grabbing;
+        }
+        
+        @media (max-width: 768px) {
+            .photo-track {
+                cursor: grab;
+            }
+            
+            .photo-track.grabbing {
+                cursor: grabbing;
+            }
         }
     `;
     document.head.appendChild(style);
