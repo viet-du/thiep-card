@@ -195,3 +195,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Xuất hàm ra global để effects.js gọi được
 window.playMusicOnEnvelopeOpen = playMusicOnEnvelopeOpen;
+// Thêm vào đầu file music.js
+
+
+// Phát nhạc khi mở thiệp
+function playMusicOnEnvelopeOpen() {
+    if (hasOpenedEnvelope) return;
+    
+    hasOpenedEnvelope = true;
+    
+    // Phát nhạc ngay lập tức
+    setTimeout(() => {
+        const musicSelector = document.getElementById('music-selector');
+        if (musicSelector && musicSelector.value) {
+            playSelectedMusic();
+        }
+    }, 300);
+}
+
+// Xuất hàm ra global để effects.js gọi được
+window.playMusicOnEnvelopeOpen = playMusicOnEnvelopeOpen;
