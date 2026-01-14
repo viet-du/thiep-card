@@ -42,6 +42,12 @@
                 <div class="profile-frame">
                     <div class="gold-frame">
                         <img src="assets/image/1.jpg" alt="Học sinh tốt nghiệp" class="profile-img">
+                         <div class="graduation-stickers">
+                        <div class="sticker sticker-1">🎓</div>
+                        <div class="sticker sticker-2">🎓</div>
+                        <div class="sticker sticker-3">🎓</div>
+                        <div class="sticker sticker-4">🎓</div>
+                    </div>
                         <div class="frame-decoration">
                             <i class="fas fa-star gold-star"></i>
                             <i class="fas fa-star gold-star"></i>
@@ -219,37 +225,41 @@
                 
                 <div class="wishes-container">
                     <div class="wishes-form">
-                        <form name="wishes" method="POST" data-netlify="true" netlify>
-                            <input type="hidden" name="form-name" value="wishes">
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="sender"><i class="fas fa-user"></i> Họ tên của bạn</label>
-                                    <input type="text" id="sender" name="sender" placeholder="Nhập họ tên của bạn" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="relationship"><i class="fas fa-users"></i> Mối quan hệ</label>
-                                    <select id="relationship" name="relationship" class="elegant-select" required>
-                                        <option value="" selected disabled>Chọn mối quan hệ</option>
-                                        <option value="family">Gia đình, họ hàng</option>
-                                        <option value="friend">Bạn bè</option>
-                                        <option value="teacher">Thầy cô giáo</option>
-                                        <option value="alumni">Cựu học sinh</option>
-                                        <option value="other">Khác</option>
-                                    </select>
-                                </div>
-                            </div>
-        
-        <div class="form-group">
-            <label for="message"><i class="fas fa-edit"></i> Lời chúc của bạn</label>
-            <textarea id="message" name="message" placeholder="Viết lời chúc của bạn ở đây..." rows="4" required></textarea>
-        </div>
-        
-        <div class="form-submit">
-            <button type="submit" class="submit-btn">
-                <i class="fas fa-paper-plane"></i> Gửi lời chúc
-            </button>
+                        <form id="wish-form" class="wishes-form">
+                <!-- XÓA các dòng Netlify Forms -->
+                <!-- <input type="hidden" name="form-name" value="wishes"> -->
+                <!-- XÓA: data-netlify="true" netlify -->
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sender"><i class="fas fa-user"></i> Họ tên của bạn</label>
+                        <input type="text" id="sender" name="sender" placeholder="Nhập họ tên của bạn" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="relationship"><i class="fas fa-users"></i> Mối quan hệ</label>
+                        <select id="relationship" name="relationship" class="elegant-select" required>
+                            <option value="" selected disabled>Chọn mối quan hệ</option>
+                            <option value="family">Gia đình, họ hàng</option>
+                            <option value="friend">Bạn bè</option>
+                            <option value="teacher">Thầy cô giáo</option>
+                            <option value="alumni">Cựu học sinh</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-edit"></i> LỜI CHÚC CỦA BẠN/label>
+                    <textarea id="message" name="message" placeholder="Viết lời chúc của bạn ở đây..." rows="4" required></textarea>
+                </div>
+                
+                <div class="form-submit">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Gửi lời chúc
+                    </button>
+                </div>
+            </form>
         
         <script type="module" src="main.js"></script>
         </div>
@@ -257,7 +267,11 @@
 </div>
                     
                     <div class="wishes-display">
-                        <h4><i class="fas fa-gift"></i> Lời chúc gần đây</h4>
+                        <h4><i class="fas fa-gift"></i> Lời chúc của bạn</h4>
+                        <div class="flower-decoration flower-1">🌸</div>
+                        <div class="flower-decoration flower-2">🌺</div>
+                        <div class="flower-decoration flower-3">🌼</div>
+                        <div class="flower-decoration flower-4">💐</div>
                         <div class="wishes-list" id="wishes-container">
                             <!-- Lời chúc sẽ được hiển thị ở đây -->
                         </div>
@@ -298,12 +312,16 @@
     <option value="">Tắt nhạc</option>
 </select>
 
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/wishes.js"></script>
     <script src="js/effects.js"></script>
     <script src="js/music.js"></script>
     <script src="js/album.js"></script>
-    <script src="js/wishes.js"></script>
     <script src="js/auto-slide.js"></script>
+    <script src="js/particles.js"></script>
+    
 <!-- Kiểm tra đã có FontAwesome chưa -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="js/mobile-album.js"></script>
 </body>
 </html>
