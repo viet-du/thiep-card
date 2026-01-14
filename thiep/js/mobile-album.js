@@ -68,17 +68,35 @@ function optimizeForMobile() {
     optimizeAlbumForMobile();
     
     // Tối ưu riêng cho iPhone
-    optimizeForIPhone();
+function optimizeForiPhone() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (!isIOS || !isMobile) return;
     
-    console.log('Mobile album đã được tối ưu');
+    console.log('Tối ưu hóa album cho iPhone');
+    
+    // Đảm bảo các nút điều khiển hiển thị
+    const leftControl = document.querySelector('.left-control');
+    const rightControl = document.querySelector('.right-control');
+    
+    if (leftControl) leftControl.style.display = 'flex';
+    if (rightControl) rightControl.style.display = 'flex';
+    
+    // Thêm hiệu ứng feedback khi chạm
+    const photoItems = document.querySelectorAll('.photo-item');
+    photoItems.forEach(item => {
+        item.style.webkitTapHighlightColor = 'rgba(218, 165, 32, 0.1)';
+        item.style.cursor = 'pointer';
+    });
 }
 
-// Khởi tạo khi DOM ready
+// Khởi tạo
 document.addEventListener('DOMContentLoaded', function() {
-    // Chờ 1 giây để đảm bảo album.js đã chạy xong
     setTimeout(() => {
-        optimizeForMobile();
-    }, 1000);
+        if (isMobile) {
+            optimizeForiPhone();
+        }
+    }, 1500);
+});
     
     // Thêm sự kiện resize
     window.addEventListener('resize', function() {
@@ -88,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
             optimizeForMobile();
         }, 250);
     });
-});
+}S;
 
 // Export các hàm nếu cần
 if (typeof module !== 'undefined' && module.exports) {
