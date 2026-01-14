@@ -74,7 +74,16 @@ function addGlitterStyles() {
 
 // Hiệu ứng pháo hoa vàng
 function createGoldenFireworks() {
-    const container = document.getElementById('fireworks');
+    const container = document.createElement('div');
+    container.id = 'fireworks-temp';
+    container.style.position = 'fixed';
+    container.style.top = '0';
+    container.style.left = '0';
+    container.style.width = '100%';
+    container.style.height = '100%';
+    container.style.pointerEvents = 'none';
+    container.style.zIndex = '3';
+    document.body.appendChild(container);
     
     for (let i = 0; i < 15; i++) {
         setTimeout(() => {
@@ -111,6 +120,154 @@ function createGoldenFireworks() {
             }, 300);
         }, i * 400);
     }
+    
+    // Xóa container sau khi pháo hoa kết thúc
+    setTimeout(() => {
+        if (container.parentNode) {
+            container.parentNode.removeChild(container);
+        }
+    }, 8000);
+}
+
+// Tạo hiệu ứng chim bay
+function createBirdsEffect() {
+    const container = document.getElementById('birds-effect');
+    if (!container) return;
+    
+    // Xóa chim cũ nếu có
+    container.innerHTML = '';
+    
+    const birdCount = 15; // Số lượng chim
+    
+    for (let i = 0; i < birdCount; i++) {
+        const bird = document.createElement('div');
+        bird.classList.add('bird');
+        
+        // Kích thước ngẫu nhiên
+        const size = Math.random() * 30 + 15; // 15-45px
+        
+        // Sử dụng icon chim từ FontAwesome
+        bird.innerHTML = '<i class="fas fa-dove"></i>';
+        bird.style.fontSize = `${size}px`;
+        
+        // Màu sắc (trắng, xám, nâu)
+        const colors = [
+            '#FFFFFF', // Trắng
+            '#D3D3D3', // Xám nhạt
+            '#A9A9A9', // Xám
+            '#8B7355', // Nâu nhạt
+            '#DAA520'  // Vàng nâu
+        ];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        bird.style.color = color;
+        
+        // Vị trí bắt đầu (bên ngoài màn hình)
+        const startSide = Math.random() > 0.5 ? 'left' : 'right';
+        const startY = Math.random() * 100;
+        
+        if (startSide === 'left') {
+            bird.style.left = '-50px';
+            bird.style.top = `${startY}vh`;
+        } else {
+            bird.style.right = '-50px';
+            bird.style.top = `${startY}vh`;
+        }
+        
+        // Hiệu ứng bay - tốc độ và hướng ngẫu nhiên
+        const duration = Math.random() * 20 + 15; // 15-35s
+        const delay = Math.random() * 5;
+        const curveY = Math.random() * 100 - 50;
+        
+        // Tạo animation riêng cho mỗi chim
+        const animationName = `birdFly${i}`;
+        
+        // Thêm keyframes động
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ${animationName} {
+                0% {
+                    transform: translateX(0) translateY(0) rotate(0deg);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 0.9;
+                }
+                90% {
+                    opacity: 0.9;
+                }
+                100% {
+                    transform: translateX(${startSide === 'left' ? 'calc(100vw + 100px)' : 'calc(-100vw - 100px)'}) 
+                               translateY(${curveY}px) 
+                               rotate(${startSide === 'left' ? '10' : '-10'}deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        bird.style.animation = `${animationName} ${duration}s linear ${delay}s infinite`;
+        
+        // Hiệu ứng vỗ cánh
+        bird.style.animation += `, birdFlap 0.3s ease-in-out ${delay}s infinite alternate`;
+        
+        container.appendChild(bird);
+    }
+}
+
+// Thêm CSS cho hiệu ứng chim bay
+function addBirdsStyles() {
+    const styleId = 'birds-styles';
+    if (document.getElementById(styleId)) return;
+    
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.textContent = `
+        #birds-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .bird {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            will-change: transform, opacity;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+        }
+        
+        @keyframes birdFlap {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        /* Thêm hiệu ứng cho các loại chim khác nhau */
+        .bird:nth-child(3n) i {
+            /* Chim lớn hơn */
+            transform: scale(1.2);
+        }
+        
+        .bird:nth-child(3n+1) i {
+            /* Chim nhỏ hơn */
+            transform: scale(0.9);
+        }
+        
+        .bird:nth-child(5n) {
+            /* Một số chim bay cao hơn */
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7));
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // Mở phong bì
@@ -122,8 +279,19 @@ function openEnvelope() {
     // Thêm class mở
     envelope.classList.add('open');
     
+    // PHÁT NHẠC NGAY KHI MỞ THIỆP - GỌI HÀM TỪ music.js
+    setTimeout(() => {
+        if (window.playMusicOnEnvelopeOpen) {
+            window.playMusicOnEnvelopeOpen();
+        }
+    }, 300);
+    
     // Tạo hiệu ứng kim tuyến khi mở thiệp
     createGoldenFireworks();
+    
+    // Tạo hiệu ứng chim bay
+    createBirdsEffect();
+    addBirdsStyles();
     
     // Ẩn phong bì và hiện nội dung sau 1 giây
     setTimeout(() => {
@@ -136,8 +304,12 @@ function openEnvelope() {
             createGlitterEffect();
             addGlitterStyles();
             
+            // Tạo hiệu ứng chim bay
+            createBirdsEffect();
+            addBirdsStyles();
+            
             // Tạo pháo hoa định kỳ
-            setInterval(createGoldenFireworks, 5000);
+            setInterval(createGoldenFireworks, 8000);
         }, 1000);
     }, 1000);
 }
@@ -147,6 +319,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Tạo hiệu ứng kim tuyến ban đầu
     createGlitterEffect();
     addGlitterStyles();
+    
+    // Tạo hiệu ứng chim bay ban đầu
+    createBirdsEffect();
+    addBirdsStyles();
 });
 playMusicOnEnvelopeOpen();
 // Thêm hàm tạo hiệu ứng hạt bay
