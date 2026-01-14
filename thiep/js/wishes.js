@@ -1,26 +1,8 @@
 // Danh sách lời chúc mẫu
 const sampleWishes = [
     { 
-        sender: "Gia đình", 
-        message: "Chúc mừng con đã tốt nghiệp! Gia đình rất tự hào về thành tích của con. Chúc con thành công trên con đường đại học sắp tới!", 
-        relationship: "family",
-        time: "2 giờ trước"
-    },
-    { 
-        sender: "Thầy Nguyễn Văn B", 
-        message: "Chúc mừng em đã hoàn thành chương trình THPT. Thầy tin rằng với sự chăm chỉ và thông minh, em sẽ đạt được nhiều thành công trong tương lai.", 
-        relationship: "teacher",
-        time: "5 giờ trước"
-    },
-    { 
-        sender: "Bạn thân - Minh Anh", 
-        message: "Chúc mừng cậu đã tốt nghiệp! Thật tuyệt vời khi được học cùng cậu 3 năm qua. Hãy cùng nhau cố gắng ở chặng đường tiếp theo nhé!", 
-        relationship: "friend",
-        time: "1 ngày trước"
-    },
-    { 
-        sender: "Ông bà nội", 
-        message: "Cháu trai của ông bà thật xuất sắc! Chúc mừng cháu đã tốt nghiệp. Ông bà luôn tự hào về cháu và mong cháu luôn thành công.", 
+        sender: "Anh Việt", 
+        message: "Chúc em sắp bước vào kỳ thi chuẩn bị tinh thần thật tốt dù khó khăn nào cũng sẽ vượt qua chúc em sẽ bước đầu vào con đường mới sau,càng thành công,hãy luôn nở nụ cười trên môi dù gặp khó khăn như nào nhé.", 
         relationship: "family",
         time: "2 ngày trước"
     }
