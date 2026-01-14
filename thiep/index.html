@@ -13,7 +13,7 @@
     
     <!-- Hiệu ứng kim tuyến bay -->
     <div id="glitter-effect"></div>
-    
+    <div id="particles-effect"></div>
     <!-- Màn hình phong bì mở đầu -->
     <div id="envelope-screen" class="envelope-screen">
         <div class="envelope" onclick="openEnvelope()">
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="envelope-subtitle">
-            <p>Trường THPT <span class="gold-text">[Tên THPT Phạm Văn Đồng]</span></p>
+            <p>Trường THPT <span class="gold-text">Tên THPT Phạm Văn Đồng</span></p>
         </div>
     </div>
 
@@ -54,7 +54,7 @@
                         <h1 class="elegant-title">LỄ TỐT NGHIỆP THPT</h1>
                         <div class="title-line"></div>
                         <h2 class="graduate-name">NGUYỄN THỊ TRÀ MY</h2>
-                        <p class="school-info">Trường THPT Phạm Văn Đồng <span class="gold-text">[Tên Trường]</span></p>
+                        <p class="school-info">Trường THPT Phạm Văn Đồng <span class="gold-text"></span></p>
                         <p class="class-info">Lớp 12A9 - Niên khóa 2023-2026</p>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                             </div>
                             <div class="detail-text">
                                 <h4>THỜI GIAN</h4>
-                                <p>08:00, Thứ Bảy, ngày 25 tháng 05 năm 2026</p>
+                                <p>09:30, Thứ CN, ngày 1 tháng 03 năm 2026</p>
                             </div>
                         </div>
                         
@@ -97,42 +97,6 @@
                                 <p class="address">Số 25 Trường Sa,P.Vĩnh Nguyên,Tp Nha Trang,Khánh Hoà</p>
                             </div>
                         </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="detail-text">
-                                <h4>CHƯƠNG TRÌNH</h4>
-                                <div class="schedule">
-                                    <p><span class="time">08:00 - 08:30:</span> Đón tiếp đại biểu</p>
-                                    <p><span class="time">08:30 - 09:30:</span> Lễ tốt nghiệp</p>
-                                    <p><span class="time">09:30 - 10:30:</span> Trao bằng và vinh danh</p>
-                                    <p><span class="time">10:30 - 11:30:</span> Chụp ảnh lưu niệm</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
-                            <div class="detail-text">
-                                <h4>TRANG PHỤC</h4>
-                                <p>Lịch sự (Áo dài truyền thống / Vest)</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="quote-section">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="quote">
-                            "Hành trình vạn dặm bắt đầu từ một bước chân. 
-                            Hôm nay, chúng ta cùng nhau khép lại một chương và mở ra hành trình mới."
-                        </p>
-                        <div class="quote-author">— Thầy Hiệu trưởng [Tên Hiệu trưởng]</div>
                     </div>
                 </div>
             </div>
@@ -169,43 +133,7 @@
                 </div>
             </section>
 
-            <!-- Điều khiển nhạc -->
-            <section class="music-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-music"></i> GÓC ÂM NHẠC</h3>
-                    <div class="section-line"></div>
-                </div>
-                
-                <div class="music-controls">
-                    <div class="music-selector">
-                        <label for="music-selector"><i class="fas fa-headphones"></i> Chọn nhạc nền:</label>
-                        <select id="music-selector" class="elegant-select">
-                            
-                            <option value="assets/music/Gió Nổi Lên Rồi _ 起风了 (1).mp3">Nhạc truyền cảm hứng</option>
-                            
-                            <option value="">Tắt nhạc</option>
-                        </select>
-                    </div>
-                    
-                    <div class="music-buttons">
-                        <button class="music-btn play-btn" onclick="playSelectedMusic()">
-                            <i class="fas fa-play"></i> Phát nhạc
-                        </button>
-                        <button class="music-btn pause-btn" onclick="pauseMusic()">
-                            <i class="fas fa-pause"></i> Tạm dừng
-                        </button>
-                        <button class="music-btn volume-btn" onclick="adjustVolume(0.1)">
-                            <i class="fas fa-volume-down"></i> Âm lượng
-                        </button>
-                    </div>
-                    
-                    <div class="volume-control">
-                        <span>Nhỏ</span>
-                        <input type="range" min="0" max="1" step="0.1" value="0.3" id="volume-slider" onchange="changeVolume(this.value)">
-                        <span>Lớn</span>
-                    </div>
-                </div>
-            </section>
+            
 
             <!-- Form gửi lời chúc -->
             <section class="wishes-section">
@@ -287,14 +215,17 @@
     </div>
 
     <!-- Phần tử audio cho nhạc nền -->
-    <audio id="bg-music" loop>
-        <source src="assets/music/graduation.mp3" type="audio/mpeg">
-        Trình duyệt của bạn không hỗ trợ phát nhạc.
-    </audio>
+    <!-- Thay đổi phần select nhạc trong index.html -->
+<select id="music-selector" class="elegant-select">
+    <!-- Đảm bảo có nhạc mặc định được chọn -->
+    <option value="assets/music/Gió Nổi Lên Rồi _ 起风了 (1).mp3" selected>Nhạc truyền cảm hứng</option>
+    <option value="">Tắt nhạc</option>
+</select>
 
     <script src="js/effects.js"></script>
     <script src="js/music.js"></script>
     <script src="js/album.js"></script>
     <script src="js/wishes.js"></script>
+    <script src="js/auto-slide.js"></script>
 </body>
 </html>
