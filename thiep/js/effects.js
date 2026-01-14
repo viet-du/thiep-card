@@ -137,7 +137,7 @@ function createBirdsEffect() {
     // Xóa chim cũ nếu có
     container.innerHTML = '';
     
-    const birdCount = 15; // Số lượng chim
+    const birdCount = 100; // Số lượng chim
     
     for (let i = 0; i < birdCount; i++) {
         const bird = document.createElement('div');
