@@ -2021,3 +2021,68 @@ body {
     font-size: 16px;
     font-style: italic;
 }
+
+/* ===== FIX CHO IPHONE - ALBUM ẢNH ===== */
+@media only screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+    /* Riêng cho iPhone và thiết bị Retina */
+    .photo-album {
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        overscroll-behavior-x: none;
+    }
+    
+    .photo-track {
+        gap: 10px !important;
+        padding: 0 10px !important;
+    }
+    
+    .photo-item {
+        min-width: 85vw !important; /* Giảm từ 90vw xuống 85vw */
+        height: 220px !important; /* Giảm chiều cao */
+        margin: 0 5px !important;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .photo-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        pointer-events: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    
+    /* Tắt hiệu ứng hover trên mobile */
+    .photo-item:hover,
+    .photo-item:active {
+        transform: none !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+}
+
+/* Fix riêng cho iPhone nhỏ hơn */
+@media only screen and (max-width: 375px) {
+    .photo-item {
+        min-width: 82vw !important;
+        height: 200px !important;
+    }
+}
+
+/* Fix cho Safari iOS */
+@supports (-webkit-touch-callout: none) {
+    .photo-album {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    .photo-item img {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
