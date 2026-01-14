@@ -225,13 +225,13 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="sender"><i class="fas fa-user"></i> Họ tên của bạn</label>
-                                    <input type="text" id="sender" name="sender" placeholder="Nhập họ tên" required>
+                                    <input type="text" id="sender" name="sender" placeholder="Nhập họ tên của bạn" required>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="relationship"><i class="fas fa-users"></i> Mối quan hệ</label>
-                                    <select id="relationship" name="relationship" class="elegant-select">
-                                        <option value="">Chọn mối quan hệ</option>
+                                    <select id="relationship" name="relationship" class="elegant-select" required>
+                                        <option value="" selected disabled>Chọn mối quan hệ</option>
                                         <option value="family">Gia đình, họ hàng</option>
                                         <option value="friend">Bạn bè</option>
                                         <option value="teacher">Thầy cô giáo</option>
@@ -240,19 +240,21 @@
                                     </select>
                                 </div>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="message"><i class="fas fa-edit"></i> Lời chúc của bạn</label>
-                                <textarea id="message" name="message" placeholder="Viết lời chúc của bạn ở đây..." rows="5" required></textarea>
-                            </div>
-                            
-                            <div class="form-submit">
-                                <button type="submit" class="submit-btn">
-                                    <i class="fas fa-paper-plane"></i> Gửi lời chúc
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+        
+        <div class="form-group">
+            <label for="message"><i class="fas fa-edit"></i> Lời chúc của bạn</label>
+            <textarea id="message" name="message" placeholder="Viết lời chúc của bạn ở đây..." rows="4" required></textarea>
+        </div>
+        
+        <div class="form-submit">
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Gửi lời chúc
+            </button>
+        
+        <script type="module" src="main.js"></script>
+        </div>
+    </form>
+</div>
                     
                     <div class="wishes-display">
                         <h4><i class="fas fa-gift"></i> Lời chúc gần đây</h4>
