@@ -1026,3 +1026,306 @@ body {
         font-size: 24px;
     }
 }
+/* Thêm responsive cho phong bì trên điện thoại */
+@media (max-width: 480px) {
+    .envelope {
+        width: 280px;
+        height: 190px;
+        transform: scale(0.9);
+    }
+    
+    .envelope-flap {
+        border-left: 140px solid transparent;
+        border-right: 140px solid transparent;
+        border-top: 95px solid #f5e6c8;
+    }
+    
+    .envelope-text h2 {
+        font-size: 22px;
+    }
+    
+    .envelope-text p {
+        font-size: 16px;
+    }
+    
+    .envelope-subtitle {
+        font-size: 18px;
+        padding: 0 20px;
+        text-align: center;
+    }
+    
+    /* Chỉnh kích thước ảnh profile */
+    .profile-img {
+        width: 180px;
+        height: 230px;
+    }
+    
+    .graduate-name {
+        font-size: 28px;
+    }
+    
+    .elegant-title {
+        font-size: 24px;
+    }
+    
+    /* Điều chỉnh album cho mobile */
+    .photo-item {
+        min-width: 180px;
+        height: 220px;
+    }
+    
+    .album-control {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    /* Điều chỉnh form trên mobile */
+    .wishes-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Giảm padding trên mobile */
+    .invitation-content {
+        padding: 25px;
+    }
+    
+    .detail-item {
+        padding: 20px;
+    }
+    
+    .music-controls {
+        padding: 0 10px;
+    }
+    
+    /* Tối ưu kích thước chữ */
+    .invitation-text {
+        font-size: 16px;
+    }
+    
+    .detail-text h4 {
+        font-size: 15px;
+    }
+    
+    .detail-text p {
+        font-size: 14px;
+    }
+}
+
+/* Thêm responsive cho tablet */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .invitation-details {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .music-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .music-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .volume-control {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* Thêm hiệu ứng cho touch trên album */
+@media (hover: none) and (pointer: coarse) {
+    .photo-track {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    .album-control {
+        touch-action: manipulation;
+    }
+}
+#particles-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform, opacity;
+    filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.5));
+}
+
+/* Responsive cho điện thoại - Cải thiện */
+@media (max-width: 480px) {
+    .envelope {
+        width: 280px;
+        height: 190px;
+        transform: scale(1); /* Không scale nhỏ đi */
+    }
+    
+    .envelope-flap {
+        border-left: 140px solid transparent;
+        border-right: 140px solid transparent;
+        border-top: 95px solid #f5e6c8;
+    }
+    
+    .envelope-text h2 {
+        font-size: 22px;
+    }
+    
+    .envelope-text p {
+        font-size: 16px;
+    }
+    
+    .envelope-subtitle {
+        font-size: 18px;
+        padding: 0 20px;
+        text-align: center;
+    }
+    
+    .profile-img {
+        width: 180px;
+        height: 230px;
+    }
+    
+    .graduate-name {
+        font-size: 28px;
+    }
+    
+    .elegant-title {
+        font-size: 24px;
+    }
+    
+    .photo-item {
+        min-width: 180px;
+        height: 220px;
+    }
+    
+    .album-control {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    /* Giảm khoảng cách trên mobile */
+    #main-content {
+        padding: 10px;
+    }
+    
+    .header, .invitation-card, .album-section, .music-section, .wishes-section {
+        border-radius: 15px;
+        padding: 25px 15px;
+    }
+    
+    .profile-container {
+        padding: 20px 15px;
+        gap: 25px;
+    }
+    
+    .invitation-content {
+        padding: 25px 15px;
+    }
+    
+    /* Tối ưu kích thước chữ */
+    .invitation-text {
+        font-size: 16px;
+        padding: 0;
+    }
+    
+    .detail-text h4 {
+        font-size: 15px;
+    }
+    
+    .detail-text p {
+        font-size: 14px;
+    }
+    
+    /* Điều chỉnh form */
+    .wishes-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .music-controls {
+        padding: 0;
+    }
+    
+    /* Cải thiện hiển thị trên màn hình nhỏ */
+    .detail-item {
+        padding: 20px 15px;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .detail-icon {
+        margin-bottom: 10px;
+    }
+}
+
+/* Hiệu ứng cho touch trên album */
+@media (hover: none) and (pointer: coarse) {
+    .photo-track {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        cursor: grab;
+    }
+    
+    .photo-track:active {
+        cursor: grabbing;
+    }
+    
+    .album-control {
+        touch-action: manipulation;
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Điều chỉnh phong bì cho mobile tốt hơn */
+@media (max-width: 360px) {
+    .envelope {
+        width: 260px;
+        height: 180px;
+    }
+    
+    .envelope-flap {
+        border-left: 130px solid transparent;
+        border-right: 130px solid transparent;
+        border-top: 90px solid #f5e6c8;
+    }
+    
+    .stamp {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+    }
+}
