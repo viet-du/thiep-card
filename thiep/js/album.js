@@ -1,3 +1,4 @@
+// album.js - Phiên bản hoàn chỉnh
 // Danh sách ảnh mẫu với chú thích
 const graduationPhotos = [
     { 
@@ -27,6 +28,9 @@ let currentPhotoIndex = 0;
 let isAutoSliding = true;
 let autoSlideInterval;
 let isMobile = false;
+let isDragging = false;
+let startX = 0;
+let scrollLeft = 0;
 
 // Kiểm tra thiết bị mobile
 function checkMobileDevice() {
@@ -34,55 +38,47 @@ function checkMobileDevice() {
     return isMobile;
 }
 
-// Tạo album ảnh với responsive
+// Tạo album ảnh với responsive (ĐÃ SỬA)
 function createPhotoAlbum() {
     const track = document.getElementById('photo-track');
+    if (!track) return;
+    
     track.innerHTML = '';
     
     graduationPhotos.forEach((photo, index) => {
         const photoItem = document.createElement('div');
         photoItem.classList.add('photo-item');
         photoItem.dataset.index = index;
-        // Kiểm tra nếu là mobile
-        if (isMobile) {
-            photoItem.style.minWidth = '85vw';
-            photoItem.style.height = '220px';
-        }
         
-        // Thêm sự kiện click
-        photoItem.addEventListener('click', () => {
-            handlePhotoClick(index);
-        });
-        
-        // Thêm sự kiện touch cho mobile
-        photoItem.addEventListener('touchstart', (e) => {
-            if (isMobile) {
-                e.preventDefault();
-                handlePhotoClick(index);
-            }
-        });
+        // XÓA phần set style inline - để CSS kiểm soát
+        // if (isMobile) {
+        //     photoItem.style.minWidth = '85vw';
+        //     photoItem.style.height = '220px';
+        // }
         
         const img = document.createElement('img');
         img.src = photo.src;
         img.alt = photo.alt;
         img.loading = 'lazy';
-        if (isMobile) {
-            img.style.cssText = `
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-                -webkit-touch-callout: none;
-            `;
-        }
-        // Sửa lỗi ảnh không tải
+        
+        // XÓA phần set style inline cho ảnh - để CSS kiểm soát
+        // if (isMobile) {
+        //     img.style.cssText = `
+        //         width: 100%;
+        //         height: 100%;
+        //         object-fit: cover;
+        //         display: block;
+        //         -webkit-touch-callout: none;
+        //     `;
+        // }
+        
+        // Xử lý lỗi ảnh
         img.onerror = function() {
+            console.error(`Không thể tải ảnh: ${photo.src}`);
             const color = 'DAA520';
             const bgColor = 'f5f0e6';
             this.src = `https://via.placeholder.com/300x400/${bgColor}/${color}?text=${encodeURIComponent(photo.caption || photo.alt)}`;
             this.style.objectFit = 'cover';
-            this.style.width = '100%';
-            this.style.height = '100%';
         };
         
         // Đảm bảo ảnh hiển thị đúng
@@ -99,53 +95,185 @@ function createPhotoAlbum() {
         photoItem.appendChild(caption);
         track.appendChild(photoItem);
     });
+    
+    // Thêm sự kiện sau khi tạo xong
+    setupAlbumEvents();
+}
+
+// Thiết lập sự kiện cho album
+function setupAlbumEvents() {
+    const photoItems = document.querySelectorAll('.photo-item');
+    const track = document.getElementById('photo-track');
+    const albumContainer = document.querySelector('.photo-album');
+    
+    if (!photoItems.length || !track || !albumContainer) return;
+    
+    // Sự kiện click cho từng ảnh
+    photoItems.forEach((item, index) => {
+        // Xóa sự kiện cũ nếu có
+        item.replaceWith(item.cloneNode(true));
+        const newItem = track.children[index];
+        
+        // Thêm sự kiện click
+        newItem.addEventListener('click', (e) => {
+            if (!isMobile) {
+                e.preventDefault();
+                handlePhotoClick(index);
+            }
+        });
+        
+        // Thêm sự kiện touch cho mobile
+        newItem.addEventListener('touchstart', (e) => {
+            if (isMobile) {
+                e.preventDefault();
+                // Trên mobile, touch sẽ kích hoạt swipe
+                // Click sẽ xử lý riêng
+                const touch = e.touches[0];
+                startX = touch.clientX;
+                scrollLeft = track.scrollLeft;
+                isDragging = true;
+                pauseAutoSlide();
+            }
+        });
+        
+        newItem.addEventListener('touchend', () => {
+            if (isMobile) {
+                isDragging = false;
+                // Nếu không drag nhiều thì xem như click
+                const diff = Math.abs(startX - track.scrollLeft);
+                if (diff < 10) {
+                    handlePhotoClick(index);
+                }
+            }
+        });
+    });
+    
+    // Thiết lập swipe/drag
+    setupSwipeEvents(albumContainer, track);
+}
+
+// Thiết lập sự kiện swipe
+function setupSwipeEvents(container, track) {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    
+    // Desktop mouse events
+    container.addEventListener('mousedown', (e) => {
+        if (!isMobile) {
+            isDown = true;
+            container.classList.add('active');
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = track.scrollLeft;
+            pauseAutoSlide();
+        }
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        if (!isMobile) {
+            isDown = false;
+            container.classList.remove('active');
+        }
+    });
+    
+    container.addEventListener('mouseup', () => {
+        if (!isMobile) {
+            isDown = false;
+            container.classList.remove('active');
+            setTimeout(() => {
+                if (isAutoSliding) {
+                    startAutoSlide();
+                }
+            }, 3000);
+        }
+    });
+    
+    container.addEventListener('mousemove', (e) => {
+        if (!isDown || isMobile) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 2;
+        track.scrollLeft = scrollLeft - walk;
+    });
+    
+    // Mobile touch events
+    container.addEventListener('touchstart', (e) => {
+        if (isMobile) {
+            isDown = true;
+            const touch = e.touches[0];
+            startX = touch.pageX - container.offsetLeft;
+            scrollLeft = track.scrollLeft;
+            pauseAutoSlide();
+        }
+    });
+    
+    container.addEventListener('touchend', () => {
+        if (isMobile) {
+            isDown = false;
+            setTimeout(() => {
+                if (isAutoSliding) {
+                    startAutoSlide();
+                }
+            }, 3000);
+        }
+    });
+    
+    container.addEventListener('touchmove', (e) => {
+        if (!isDown || !isMobile) return;
+        const touch = e.touches[0];
+        const x = touch.pageX - container.offsetLeft;
+        const walk = (x - startX) * 2;
+        track.scrollLeft = scrollLeft - walk;
+    });
 }
 
 // Xử lý click ảnh
 function handlePhotoClick(clickedIndex) {
     pauseAutoSlide();
     
-    // Nếu là mobile, chuyển đến ảnh tiếp theo
-    if (isMobile) {
-        const nextIndex = (clickedIndex + 1) % graduationPhotos.length;
-        scrollToPhoto(nextIndex);
+    // Nếu click vào ảnh hiện tại hoặc ảnh cuối, chuyển về đầu
+    if (clickedIndex === currentPhotoIndex || clickedIndex === graduationPhotos.length - 1) {
+        scrollToPhoto(0);
     } else {
-        // Desktop: nếu click vào ảnh hiện tại hoặc ảnh cuối, chuyển về đầu
-        if (clickedIndex === currentPhotoIndex || clickedIndex === graduationPhotos.length - 1) {
-            scrollToPhoto(0);
-        } else {
-            scrollToPhoto(clickedIndex + 1);
-        }
+        scrollToPhoto(clickedIndex + 1);
     }
     
-    // Tiếp tục auto slide sau 5 giây
+    // Tiếp tục auto slide sau 3 giây
     setTimeout(() => {
         if (isAutoSliding) {
             startAutoSlide();
         }
-    }, 5000);
+    }, 3000);
 }
 
-// Cuộn đến ảnh cụ thể
+// Cuộn đến ảnh cụ thể (ĐÃ SỬA)
 function scrollToPhoto(index) {
     const track = document.getElementById('photo-track');
     const photoItems = document.querySelectorAll('.photo-item');
     
-    if (photoItems.length === 0) return;
+    if (!track || photoItems.length === 0) return;
     
     // Đảm bảo index hợp lệ
     currentPhotoIndex = Math.max(0, Math.min(index, graduationPhotos.length - 1));
     
     // Tính toán vị trí cuộn
-    const photoWidth = photoItems[0].offsetWidth + 25;
+    const photoItem = photoItems[0];
+    if (!photoItem) return;
+    
+    const photoWidth = photoItem.offsetWidth + parseInt(getComputedStyle(photoItem).marginRight || 0);
     const scrollPosition = currentPhotoIndex * photoWidth;
     
-    // Hiệu ứng smooth scroll
-    track.style.transition = 'transform 0.5s ease';
-    track.style.transform = `translateX(-${scrollPosition}px)`;
+    // Sử dụng scrollTo cho mượt mà
+    track.style.scrollBehavior = 'smooth';
+    track.scrollLeft = scrollPosition;
     
     // Cập nhật indicator
     updateAlbumIndicator();
+    
+    // Reset scroll behavior
+    setTimeout(() => {
+        track.style.scrollBehavior = 'auto';
+    }, 500);
 }
 
 // Cuộn album bằng nút
@@ -159,33 +287,27 @@ function scrollAlbum(direction) {
         scrollToPhoto(newIndex);
     }
     
-    // Tiếp tục auto slide sau 5 giây
+    // Tiếp tục auto slide sau 3 giây
     setTimeout(() => {
         if (isAutoSliding) {
             startAutoSlide();
         }
-    }, 5000);
+    }, 3000);
 }
 
 // Cập nhật indicator album
 function updateAlbumIndicator() {
     const indicators = document.querySelectorAll('.indicator');
-    const totalPhotos = graduationPhotos.length;
+    if (indicators.length === 0) return;
+    
+    // Tính toán trang hiện tại
     const photosPerView = getPhotosPerView();
     const currentPage = Math.floor(currentPhotoIndex / photosPerView);
-    const totalPages = Math.ceil(totalPhotos / photosPerView);
+    const totalPages = Math.ceil(graduationPhotos.length / photosPerView);
     
     indicators.forEach((indicator, index) => {
-        if (index < totalPages) {
-            indicator.style.display = 'inline-block';
-            if (index === currentPage) {
-                indicator.classList.add('active');
-            } else {
-                indicator.classList.remove('active');
-            }
-        } else {
-            indicator.style.display = 'none';
-        }
+        indicator.style.display = index < totalPages ? 'inline-block' : 'none';
+        indicator.classList.toggle('active', index === currentPage);
     });
 }
 
@@ -219,108 +341,65 @@ function resumeAutoSlide() {
     startAutoSlide();
 }
 
-// Touch/swipe cho mobile
-function setupMobileTouch() {
-    if (!isMobile) return;
+// Xử lý khi resize window
+function handleResize() {
+    const wasMobile = isMobile;
+    checkMobileDevice();
     
-    const albumContainer = document.querySelector('.photo-album');
-    const track = document.getElementById('photo-track');
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let isSwiping = false;
+    // Nếu chuyển đổi giữa mobile/desktop, cần tạo lại album
+    if (wasMobile !== isMobile) {
+        createPhotoAlbum();
+    }
     
-    albumContainer.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-        isSwiping = true;
-        pauseAutoSlide();
-        
-        // Tắt transition khi đang swipe
-        track.style.transition = 'none';
-    });
+    updateAlbumIndicator();
     
-    albumContainer.addEventListener('touchmove', (e) => {
-        if (!isSwiping) return;
-        
-        touchEndX = e.touches[0].clientX;
-        const diff = touchEndX - touchStartX;
-        
-        // Di chuyển track theo swipe
-        const currentPosition = -currentPhotoIndex * (track.querySelector('.photo-item').offsetWidth + 25);
-        track.style.transform = `translateX(${currentPosition + diff}px)`;
-    });
-    
-    albumContainer.addEventListener('touchend', () => {
-        if (!isSwiping) return;
-        
-        isSwiping = false;
-        const diff = touchEndX - touchStartX;
-        const threshold = 50; // Ngưỡng swipe
-        
-        // Bật lại transition
-        track.style.transition = 'transform 0.3s ease';
-        
-        if (Math.abs(diff) > threshold) {
-            if (diff > 0 && currentPhotoIndex > 0) {
-                // Swipe phải -> ảnh trước
-                scrollToPhoto(currentPhotoIndex - 1);
-            } else if (diff < 0 && currentPhotoIndex < graduationPhotos.length - 1) {
-                // Swipe trái -> ảnh tiếp theo
-                scrollToPhoto(currentPhotoIndex + 1);
-            } else {
-                // Quay về vị trí cũ
-                scrollToPhoto(currentPhotoIndex);
-            }
-        } else {
-            // Quay về vị trí cũ nếu swipe ngắn
-            scrollToPhoto(currentPhotoIndex);
-        }
-        
-        // Tiếp tục auto slide sau 3 giây
-        setTimeout(() => {
-            if (isAutoSliding) {
-                startAutoSlide();
-            }
-        }, 3000);
-    });
+    // Điều chỉnh lại vị trí sau khi resize
+    setTimeout(() => {
+        scrollToPhoto(currentPhotoIndex);
+    }, 100);
 }
 
 // Khởi tạo album khi trang tải xong
 document.addEventListener('DOMContentLoaded', function() {
+    // Kiểm tra thiết bị
     checkMobileDevice();
-    createPhotoAlbum();
-    updateAlbumIndicator();
-    startAutoSlide();
     
-    if (isMobile) {
-        setupMobileTouch();
-    } else {
-        // Desktop: thêm hover effect
-        setupDesktopHover();
-    }
+    // Tạo album
+    createPhotoAlbum();
+    
+    // Cập nhật indicator
+    setTimeout(updateAlbumIndicator, 100);
+    
+    // Bắt đầu auto slide sau 2 giây
+    setTimeout(() => {
+        startAutoSlide();
+    }, 2000);
     
     // Xử lý resize window
-    window.addEventListener('resize', () => {
-        checkMobileDevice();
-        updateAlbumIndicator();
-        
-        // Điều chỉnh lại vị trí sau khi resize
-        setTimeout(() => {
-            scrollToPhoto(currentPhotoIndex);
-        }, 100);
+    window.addEventListener('resize', handleResize);
+    
+    // Dừng auto slide khi tab không active
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            pauseAutoSlide();
+        } else {
+            resumeAutoSlide();
+        }
     });
 });
 
-// Desktop hover effects
-function setupDesktopHover() {
-    const photoItems = document.querySelectorAll('.photo-item');
-    
-    photoItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            item.style.transform = 'scale(1.05) translateY(-5px)';
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            item.style.transform = 'scale(1)';
-        });
+// Thêm kiểm tra khi nhấn nút điều khiển
+window.scrollAlbum = scrollAlbum;
+
+// Hàm tiện ích để debug
+function logAlbumState() {
+    console.log('Album State:', {
+        currentPhotoIndex,
+        isMobile,
+        isAutoSliding,
+        totalPhotos: graduationPhotos.length
     });
 }
+
+// Gọi logAlbumState để debug nếu cần
+// logAlbumState();
