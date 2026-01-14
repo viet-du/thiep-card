@@ -1263,3 +1263,205 @@ body {
         scroll-snap-type: none; /* Tắt snap trên mobile để cuộn tự do */
     }
 }
+/* ALBUM SECTION - MOBILE FIX */
+.album-section {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 10px;
+}
+
+.album-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.photo-album {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 15px;
+    background: #fcf9f5;
+    padding: 15px 10px;
+    margin: 0 10px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.photo-track {
+    display: flex;
+    gap: 15px;
+    transition: transform 0.5s ease;
+    width: max-content;
+}
+
+.photo-item {
+    min-width: 250px;
+    height: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent; /* Tắt highlight khi tap trên mobile */
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: white;
+    padding: 15px 10px 10px;
+    font-size: 14px;
+    text-align: center;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.photo-item:hover .photo-caption,
+.photo-item:active .photo-caption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mobile controls - dễ nhấn hơn */
+.album-control {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #FFD700, #DAA520);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.left-control {
+    left: 5px;
+}
+
+.right-control {
+    right: 5px;
+}
+
+.album-control:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .album-section {
+        padding: 15px 5px;
+    }
+    
+    .photo-album {
+        padding: 10px 5px;
+        margin: 0 5px;
+        overflow: visible; /* Quan trọng: để không bị cắt ảnh */
+    }
+    
+    .photo-track {
+        gap: 10px;
+        padding: 0 5px;
+    }
+    
+    .photo-item {
+        min-width: 85vw; /* Chiếm 85% chiều rộng viewport */
+        height: 280px;
+        margin: 0 5px;
+    }
+    
+    .album-control {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .left-control {
+        left: -5px;
+    }
+    
+    .right-control {
+        right: -5px;
+    }
+    
+    /* Chỉ hiển thị nút điều khiển khi cần */
+    .album-control {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .photo-item {
+        min-width: 90vw; /* Chiếm 90% chiều rộng viewport */
+        height: 250px;
+    }
+    
+    .photo-caption {
+        font-size: 12px;
+        padding: 12px 8px 8px;
+    }
+    
+    .album-control {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+}
+
+/* Đảm bảo album không bị che bởi các phần tử khác */
+#main-content {
+    position: relative;
+    z-index: 5;
+}
+
+/* Fix cho các trình duyệt mobile */
+@supports (-webkit-touch-callout: none) {
+    /* CSS specific to iOS devices */
+    .photo-album {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .photo-item {
+        -webkit-transform: translateZ(0); /* Hardware acceleration */
+    }
+}
+
+@supports not (-webkit-touch-callout: none) {
+    /* CSS for other than iOS devices */
+    .photo-album {
+        scroll-behavior: smooth;
+    }
+}
+
+/* Đảm bảo ảnh luôn hiển thị đúng */
+.photo-item img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
