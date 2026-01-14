@@ -1,0 +1,22 @@
+<!-- thiep/admin.html -->
+<ul id="list"></ul>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = { /* giống trên */ };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const snap = await getDocs(collection(db, "thiep"));
+snap.forEach(doc => {
+  const li = document.createElement("li");
+  li.textContent = doc.data().content;
+  document.getElementById("list").appendChild(li);
+});
+</script>
