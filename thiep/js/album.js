@@ -12,7 +12,7 @@ const graduationPhotos = [
         caption: 'Khoảnh khắc tự hào của học sinh THPT'
     },
     { 
-        src: 'assets/image/6.jpg', 
+        src: 'assets/image/4.jpg', 
         alt: 'Thành tích học tập',
         caption: 'Hành trình 3 năm học tập đầy nỗ lực'
     },
@@ -365,3 +365,4 @@ if (window.location.search.includes('debug=album')) {
     };
     console.log('Album debug mode enabled');
 }
+
