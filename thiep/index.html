@@ -183,37 +183,37 @@
 
             <!-- Album ảnh cuộn -->
            <!-- Album ảnh cuộn -->
-                <section class="album-section">
-                    <div class="section-header">
-                        <h3><i class="fas fa-images"></i> HÀNH TRÌNH 3 NĂM</h3>
-                        <div class="section-line"></div>
-                        <p class="section-subtitle">Những khoảnh khắc đáng nhớ dưới mái trường THPT</p>
+            <section class="album-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-images"></i> HÀNH TRÌNH 3 NĂM</h3>
+                    <div class="section-line"></div>
+                    <p class="section-subtitle">Những khoảnh khắc đáng nhớ dưới mái trường THPT</p>
+                </div>
+                
+                <div class="album-container">
+                    <div class="album-control left-control" onclick="scrollAlbum(-1)">
+                        <i class="fas fa-chevron-left"></i>
                     </div>
                     
-                    <div class="album-container">
-                        <div class="album-control left-control" onclick="scrollAlbum(-1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </div>
-                        
-                        <!-- KHUNG CHỨA CỐ ĐỊNH GIỐNG ẢNH ĐẠI DIỆN -->
-                        <div class="album-wrapper">
-                            <div class="photo-track" id="photo-track">
-                                <!-- Ảnh sẽ được thêm bằng JavaScript -->
-                            </div>
-                        </div>
-                        
-                        <div class="album-control right-control" onclick="scrollAlbum(1)">
-                            <i class="fas fa-chevron-right"></i>
+                    <!-- KHUNG CHỨA CỐ ĐỊNH GIỐNG ẢNH ĐẠI DIỆN -->
+                    <div class="album-wrapper">
+                        <div class="photo-track" id="photo-track">
+                            <!-- Ảnh sẽ được thêm bằng JavaScript -->
                         </div>
                     </div>
                     
-                    <div class="album-indicator">
-                        <span class="indicator active"></span>
-                        <span class="indicator"></span>
-                        <span class="indicator"></span>
-                        <span class="indicator"></span>
+                    <div class="album-control right-control" onclick="scrollAlbum(1)">
+                        <i class="fas fa-chevron-right"></i>
                     </div>
-                </section>
+                </div>
+                
+                <div class="album-indicator">
+                    <span class="indicator active"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                </div>
+            </section>
 
             
 
@@ -263,7 +263,7 @@
                 </div>
             </form>
         
-        <script type="module" src="main.js"></script>
+        
         </div>
     </form>
 </div>
@@ -319,11 +319,12 @@
     <script src="js/effects.js"></script>
     <script src="js/music.js"></script>
     <script src="js/album.js"></script>
+    <script src="mobile-album.js"></script>
     <script src="js/auto-slide.js"></script>
+    <script type="module" src="main.js"></script>
     <script src="js/particles.js"></script>
     
 <!-- Kiểm tra đã có FontAwesome chưa -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="js/mobile-album.js"></script>
 </body>
 </html>
