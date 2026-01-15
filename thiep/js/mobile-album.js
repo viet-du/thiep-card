@@ -1,118 +1,65 @@
-// mobile-album.js - Tối ưu album trên mobile
-// Lưu ý: Đây là phiên bản hoàn chỉnh, KHÔNG có xung đột với album.js
+// mobile-album.js - FIX SẠCH, KHÔNG XUNG ĐỘT album.js
+// Chỉ tối ưu trải nghiệm mobile, KHÔNG can thiệp logic album
 
-// Kiểm tra biến toàn cục từ album.js
-let isMobile = false;
-let currentPhotoIndex = 0;
-let isAutoSliding = true;
-
-// Kiểm tra thiết bị mobile
-function checkMobileDevice() {
-    isMobile = window.innerWidth <= 768;
-    return isMobile;
-}
-
-// Tối ưu ảnh cho mobile (ĐÃ SỬA)
-function optimizeAlbumForMobile() {
-    if (!isMobile) return;
-    
-    const photoItems = document.querySelectorAll('.photo-item img');
-    
-    photoItems.forEach(img => {
-        // XÓA phần kiểm tra kích thước ảnh - để CSS kiểm soát
-        // Đảm bảo ảnh luôn dùng object-fit: cover
-        img.style.objectFit = 'cover';
-        img.style.backgroundColor = 'transparent';
-    });
-}
-
-// Tối ưu ảnh cho iPhone (ĐÃ SỬA)
-function optimizeForIPhone() {
-    if (!isMobile) return;
-    
-    // Kiểm tra nếu là iOS
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    if (!isIOS) return;
-    
-    const photoItems = document.querySelectorAll('.photo-item');
-    const albumContainer = document.querySelector('.photo-album');
-    
-    // Điều chỉnh tối thiểu cho iOS - KHÔNG ghi đè CSS
-    photoItems.forEach(item => {
-        // Chỉ thêm styles cần thiết
-        item.style.webkitTapHighlightColor = 'transparent';
-        item.style.webkitUserSelect = 'none';
-        item.style.userSelect = 'none';
-        
-        const img = item.querySelector('img');
-        if (img) {
-            img.style.objectFit = 'cover';
-            img.style.webkitUserDrag = 'none';
-        }
-    });
-    
-    // Điều chỉnh container cho iOS
-    if (albumContainer) {
-        albumContainer.style.webkitOverflowScrolling = 'touch';
-        albumContainer.style.touchAction = 'pan-x';
+(function () {
+    // Kiểm tra mobile
+    function isMobileDevice() {
+        return window.innerWidth <= 768;
     }
-}
 
-// Hàm chính để tối ưu mobile
-function optimizeForMobile() {
-    checkMobileDevice();
-    
-    if (!isMobile) return;
-    
-    // Tối ưu chung cho mobile
-    optimizeAlbumForMobile();
-    
+    // Kiểm tra iOS
+    function isIOS() {
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
+    // Tối ưu ảnh cho mobile (KHÔNG ghi đè CSS)
+    function optimizeImagesForMobile() {
+        if (!isMobileDevice()) return;
+
+        const images = document.querySelectorAll('.photo-item img');
+        images.forEach(img => {
+            img.style.webkitUserDrag = 'none';
+            img.style.userSelect = 'none';
+        });
+    }
+
     // Tối ưu riêng cho iPhone
-function optimizeForiPhone() {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    if (!isIOS || !isMobile) return;
-    
-    console.log('Tối ưu hóa album cho iPhone');
-    
-    // Đảm bảo các nút điều khiển hiển thị
-    const leftControl = document.querySelector('.left-control');
-    const rightControl = document.querySelector('.right-control');
-    
-    if (leftControl) leftControl.style.display = 'flex';
-    if (rightControl) rightControl.style.display = 'flex';
-    
-    // Thêm hiệu ứng feedback khi chạm
-    const photoItems = document.querySelectorAll('.photo-item');
-    photoItems.forEach(item => {
-        item.style.webkitTapHighlightColor = 'rgba(218, 165, 32, 0.1)';
-        item.style.cursor = 'pointer';
-    });
-}
+    function optimizeForIPhone() {
+        if (!isMobileDevice() || !isIOS()) return;
 
-// Khởi tạo
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        if (isMobile) {
-            optimizeForiPhone();
+        const albumWrapper = document.querySelector('.album-wrapper');
+        const photoItems = document.querySelectorAll('.photo-item');
+
+        if (albumWrapper) {
+            albumWrapper.style.webkitOverflowScrolling = 'touch';
+            albumWrapper.style.touchAction = 'pan-x';
         }
-    }, 1500);
-});
-    
-    // Thêm sự kiện resize
-    window.addEventListener('resize', function() {
-        // Debounce resize
-        clearTimeout(this.resizeTimer);
-        this.resizeTimer = setTimeout(() => {
-            optimizeForMobile();
-        }, 250);
-    });
-}S;
 
-// Export các hàm nếu cần
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        optimizeForMobile,
-        optimizeForIPhone,
-        optimizeAlbumForMobile
-    };
-}
+        photoItems.forEach(item => {
+            item.style.webkitTapHighlightColor = 'transparent';
+        });
+
+        // Đảm bảo nút điều hướng luôn hiện
+        const left = document.querySelector('.left-control');
+        const right = document.querySelector('.right-control');
+        if (left) left.style.display = 'flex';
+        if (right) right.style.display = 'flex';
+    }
+
+    // Khởi tạo sau khi album đã render
+    function initMobileAlbumFix() {
+        optimizeImagesForMobile();
+        optimizeForIPhone();
+    }
+
+    // DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initMobileAlbumFix, 800);
+    });
+
+    // Resize
+    window.addEventListener('resize', () => {
+        clearTimeout(window.__albumResizeTimer);
+        window.__albumResizeTimer = setTimeout(initMobileAlbumFix, 300);
+    });
+})();
