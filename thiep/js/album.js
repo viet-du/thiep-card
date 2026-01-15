@@ -41,13 +41,13 @@ function createPhotoAlbum() {
     if (!track) return;
     
     track.innerHTML = '';
+    track.style.width = `${graduationPhotos.length * 100}%`;
     
     graduationPhotos.forEach((photo, index) => {
         const photoItem = document.createElement('div');
         photoItem.className = 'photo-item';
         photoItem.dataset.index = index;
         
-        // Đảm bảo kích thước cố định, KHÔNG set style inline
         const img = document.createElement('img');
         img.src = photo.src;
         img.alt = photo.alt;
@@ -69,24 +69,16 @@ function createPhotoAlbum() {
         caption.className = 'photo-caption';
         caption.textContent = photo.caption || photo.alt;
         
-        // Thêm sự kiện click
+        // Thêm sự kiện
         photoItem.addEventListener('click', () => handlePhotoClick(index));
-        
-        // Thêm sự kiện touch cho mobile
-        photoItem.addEventListener('touchstart', (e) => {
-            if (isMobile) {
-                e.preventDefault();
-                pauseAutoSlide();
-            }
-        }, { passive: false });
         
         photoItem.appendChild(img);
         photoItem.appendChild(caption);
         track.appendChild(photoItem);
     });
     
-    // Setup touch/swipe events cho iPhone
-    setupiPhoneSwipe();
+    // Khởi tạo vị trí đầu tiên
+    scrollToPhoto(currentPhotoIndex);
 }
 
 // Thiết lập swipe cho iPhone - QUAN TRỌNG
@@ -198,7 +190,6 @@ function handlePhotoClick(clickedIndex) {
 // Cuộn đến ảnh cụ thể - ĐÃ SỬA CHO IPHONE
 function scrollToPhoto(index) {
     const track = document.getElementById('photo-track');
-    const albumContainer = document.querySelector('.photo-album');
     const photoItems = document.querySelectorAll('.photo-item');
     
     if (!track || photoItems.length === 0) return;
@@ -207,27 +198,20 @@ function scrollToPhoto(index) {
     currentPhotoIndex = Math.max(0, Math.min(index, graduationPhotos.length - 1));
     
     // Tính toán vị trí cuộn
-    const photoItem = photoItems[0];
-    if (!photoItem) return;
+    const albumWrapper = document.querySelector('.album-wrapper');
+    if (!albumWrapper) return;
     
-    const photoWidth = photoItem.offsetWidth;
-    const gap = 15;
-    const totalWidth = photoWidth + gap;
-    const scrollPosition = currentPhotoIndex * totalWidth;
+    const photoWidth = albumWrapper.offsetWidth;
+    const scrollPosition = currentPhotoIndex * photoWidth;
     
-    // Trên iPhone, sử dụng cả transform VÀ scrollLeft
+    // Sử dụng transform để cuộn
     track.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     track.style.transform = `translateX(-${scrollPosition}px)`;
-    
-    // Đồng thời scroll container
-    if (albumContainer) {
-        albumContainer.scrollLeft = scrollPosition;
-    }
     
     // Cập nhật indicator
     updateAlbumIndicator();
     
-    // Dispatch event để các component khác biết
+    // Dispatch event
     const event = new CustomEvent('albumScroll', { detail: { index: currentPhotoIndex } });
     window.dispatchEvent(event);
 }
