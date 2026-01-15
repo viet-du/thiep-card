@@ -4,22 +4,18 @@ const graduationPhotos = [
     { 
         src: 'assets/image/3.jpg', // Ảnh đại diện đầu trang
         alt: 'Học sinh tốt nghiệp',
-        caption: 
     },
     { 
         src: 'assets/image/7.jpg', 
         alt: 'Tốt nghiệp THPT',
-        caption: 
     },
     { 
         src: 'assets/image/4.jpg', 
         alt: 'Thành tích học tập',
-        caption: 
     },
     { 
         src: 'assets/image/5.jpg', 
         alt: 'Tương lai rộng mở',
-        caption: 
     }
 ];
 
@@ -365,5 +361,6 @@ if (window.location.search.includes('debug=album')) {
     };
     console.log('Album debug mode enabled');
 }
+
 
 
