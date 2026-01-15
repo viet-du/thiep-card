@@ -2,22 +2,22 @@
 // Danh sách ảnh dùng ảnh đại diện
 const graduationPhotos = [
     { 
-        src: 'assets/image/1.jpg', // Ảnh đại diện đầu trang
+        src: 'assets/image/3.jpg', // Ảnh đại diện đầu trang
         alt: 'Học sinh tốt nghiệp',
         caption: 'Chân dung tân sinh viên tốt nghiệp'
     },
     { 
-        src: 'assets/image/03e19505-e644-4bb5-b492-e938a586c093.jpg', 
+        src: 'assets/image/7.jpg', 
         alt: 'Tốt nghiệp THPT',
         caption: 'Khoảnh khắc tự hào của học sinh THPT'
     },
     { 
-        src: 'assets/image/80b17d7a-0cf3-4d7f-92c7-cde0673326cd.jpg', 
+        src: 'assets/image/6.jpg', 
         alt: 'Thành tích học tập',
         caption: 'Hành trình 3 năm học tập đầy nỗ lực'
     },
     { 
-        src: 'assets/image/a9d9dea5-db7c-4b69-8da3-e6fcd370dfb4.jpg', 
+        src: 'assets/image/5.jpg', 
         alt: 'Tương lai rộng mở',
         caption: 'Bước vào cánh cửa đại học với nhiều hoài bão'
     }
@@ -41,11 +41,14 @@ function createPhotoAlbum() {
     if (!track) return;
     
     track.innerHTML = '';
-    track.style.width = `${graduationPhotos.length * 100}%`;
+    track.style.width = '100%';
+
     
     graduationPhotos.forEach((photo, index) => {
         const photoItem = document.createElement('div');
         photoItem.className = 'photo-item';
+        photoItem.style.flex = '0 0 100%';
+        photoItem.style.maxWidth = '100%';
         photoItem.dataset.index = index;
         
         const img = document.createElement('img');
@@ -57,6 +60,31 @@ function createPhotoAlbum() {
         // Xử lý lỗi ảnh
         img.onerror = function() {
             console.log('Không thể tải ảnh:', photo.src);
+             // Tạo placeholder khi ảnh lỗi
+    const placeholder = document.createElement('div');
+    placeholder.style.cssText = `
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #f5f0e6, #e0d6c2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #8B7355;
+        font-size: 14px;
+        text-align: center;
+        padding: 20px;
+        border-radius: 12px;
+    `;
+    
+    placeholder.innerHTML = `
+        <i class="fas fa-image" style="font-size: 40px; margin-bottom: 10px; opacity: 0.5;"></i>
+        <div>${photo.alt}</div>
+        <div style="font-size: 12px; margin-top: 5px;">(Không thể tải ảnh)</div>
+    `;
+    
+    // Thay thế ảnh bằng placeholder
+    this.parentNode.replaceChild(placeholder, this);
             this.style.backgroundColor = '#f5f0e6';
             this.style.display = 'flex';
             this.style.alignItems = 'center';
@@ -201,8 +229,9 @@ function scrollToPhoto(index) {
     const albumWrapper = document.querySelector('.album-wrapper');
     if (!albumWrapper) return;
     
-    const photoWidth = albumWrapper.offsetWidth;
+    const photoWidth = photoItems[0].offsetWidth;
     const scrollPosition = currentPhotoIndex * photoWidth;
+
     
     // Sử dụng transform để cuộn
     track.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
