@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập Admin - Thiệp Tốt Nghiệp</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .login-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(218, 165, 32, 0.15);
+            border: 1px solid rgba(218, 165, 32, 0.1);
+            text-align: center;
+        }
+        
+        .login-logo {
+            margin-bottom: 25px;
+        }
+        
+        .login-logo i {
+            font-size: 48px;
+            color: #DAA520;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .login-logo h2 {
+            color: #8B7355;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .login-logo p {
+            color: #a1886f;
+            font-size: 14px;
+        }
+        
+        .header-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #DAA520, transparent);
+            width: 60px;
+            margin: 15px auto 25px;
+        }
+        
+        .login-form {
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #8B7355;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            border-radius: 10px;
+            background: #fff;
+            color: #5a4a42;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #DAA520;
+            box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
+        }
+        
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #a1886f;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+            z-index: 2;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #FFD700, #DAA520);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(218, 165, 32, 0.3);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: left;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .error-message.show {
+            display: flex;
+        }
+        
+        .login-footer {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(218, 165, 32, 0.1);
+        }
+        
+        .login-footer p {
+            color: #8B7355;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        
+        .back-link {
+            color: #DAA520;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: #8B7355;
+            gap: 10px;
+        }
+        
+        .attempts-info {
+            color: #a1886f;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .attempts-info.hidden {
+            display: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease;
+        }
+        
+        .loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            color: #DAA520;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .loading.show {
+            display: flex;
+        }
+        
+        .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 40px auto;
+                padding: 0 15px;
+            }
+            
+            .login-card {
+                padding: 30px 20px;
+                border-radius: 15px;
+            }
+            
+            .login-logo i {
+                font-size: 40px;
+            }
+            
+            .login-logo h2 {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px auto;
+            }
+            
+            .login-card {
+                padding: 25px 15px;
+            }
+            
+            .form-group input {
+                padding: 12px 14px;
+                font-size: 16px;
+            }
+            
+            .login-btn {
+                padding: 14px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hiệu ứng ánh sáng vàng -->
+    <div class="golden-light"></div>
+    
+    <!-- Hiệu ứng kim tuyến bay -->
+    <div id="glitter-effect"></div>
+    <div id="particles-effect"></div>
+    <div id="birds-effect"></div>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <i class="fas fa-lock"></i>
+                <h2>Khu Vực Quản Trị</h2>
+                <p>Trang quản lý lời chúc tốt nghiệp</p>
+                <div class="header-line"></div>
+            </div>
+            
+            <div class="error-message" id="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="error-text">Mật khẩu không đúng. Vui lòng thử lại.</span>
+            </div>
+            
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-key"></i>
+                        <span>Mật khẩu truy cập</span>
+                    </label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="Nhập mật khẩu quản trị" required>
+                        <button type="button" class="toggle-password" id="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="attempts-info" id="attempts-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="attempts-text">Bạn còn <span id="attempts-left">5</span> lần thử</span>
+                </div>
+                
+                <div class="loading" id="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Đang xác thực...</span>
+                </div>
+                
+                <button type="submit" class="login-btn" id="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Đăng nhập</span>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Chỉ dành cho quản trị viên thiệp tốt nghiệp</p>
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Quay lại trang chính</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Mật khẩu mặc định (có thể thay đổi)
+        const CORRECT_PASSWORD ="tramy1011";
+        let attemptsLeft = 5;
+        let isLocked = false;
+        let lockTimeout = null;
+        
+        // DOM Elements
+        const loginForm = document.getElementById('login-form');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('toggle-password');
+        const errorMessage = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        const attemptsInfo = document.getElementById('attempts-info');
+        const attemptsText = document.getElementById('attempts-text');
+        const attemptsLeftSpan = document.getElementById('attempts-left');
+        const loading = document.getElementById('loading');
+        const loginBtn = document.getElementById('login-btn');
+        const loginBtnText = loginBtn.querySelector('span');
+        
+        // Toggle hiển thị mật khẩu
+        togglePasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Thay đổi icon
+            const icon = this.querySelector('i');
+            if (type === 'text') {
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                icon.className = 'fas fa-eye';
+            }
+        });
+        
+        // Cập nhật hiển thị số lần thử
+        function updateAttemptsDisplay() {
+            attemptsLeftSpan.textContent = attemptsLeft;
+            
+            if (attemptsLeft <= 3) {
+                attemptsInfo.style.color = '#ff6b6b';
+            } else if (attemptsLeft <= 1) {
+                attemptsInfo.style.color = '#ee5a52';
+                attemptsText.innerHTML = `<strong>⚠️ CẢNH BÁO:</strong> Bạn còn <span id="attempts-left">${attemptsLeft}</span> lần thử`;
+            }
+        }
+        
+        // Hiển thị thông báo lỗi
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.classList.add('show');
+            passwordInput.classList.add('shake');
+            
+            setTimeout(() => {
+                passwordInput.classList.remove('shake');
+            }, 500);
+            
+            // Tự động ẩn thông báo sau 3 giây
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Khóa form đăng nhập
+        function lockForm(minutes) {
+            isLocked = true;
+            loginBtn.disabled = true;
+            passwordInput.disabled = true;
+            
+            const endTime = new Date();
+            endTime.setMinutes(endTime.getMinutes() + minutes);
+            
+            // Hiển thị thông báo khóa
+            showError(`Tài khoản bị tạm khóa. Vui lòng thử lại sau ${minutes} phút.`);
+            
+            // Cập nhật nút đăng nhập
+            loginBtn.innerHTML = `<i class="fas fa-lock"></i><span>Đã khóa (${minutes} phút)</span>`;
+            loginBtn.style.background = 'linear-gradient(135deg, #a1886f, #8B7355)';
+            
+            // Đếm ngược
+            const countdown = setInterval(() => {
+                const now = new Date();
+                const diff = endTime - now;
+                
+                if (diff <= 0) {
+                    clearInterval(countdown);
+                    unlockForm();
+                } else {
+                    const minutesLeft = Math.floor(diff / (1000 * 60));
+                    const secondsLeft = Math.floor((diff % (1000 * 60)) / 1000);
+                    loginBtn.innerHTML = `<i class="fas fa-lock"></i><span>Đã khóa (${minutesLeft}:${secondsLeft.toString().padStart(2, '0')})</span>`;
+                }
+            }, 1000);
+            
+            // Lưu thời gian khóa vào localStorage
+            localStorage.setItem('loginLockedUntil', endTime.getTime());
+            lockTimeout = setTimeout(unlockForm, minutes * 60 * 1000);
+        }
+        
+        // Mở khóa form
+        function unlockForm() {
+            isLocked = false;
+            attemptsLeft = 5;
+            loginBtn.disabled = false;
+            passwordInput.disabled = false;
+            
+            // Khôi phục nút đăng nhập
+            loginBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i><span>Đăng nhập</span>`;
+            loginBtn.style.background = 'linear-gradient(135deg, #FFD700, #DAA520)';
+            
+            // Ẩn thông báo lỗi
+            errorMessage.classList.remove('show');
+            
+            // Cập nhật hiển thị
+            updateAttemptsDisplay();
+            attemptsInfo.classList.remove('hidden');
+            
+            // Xóa thông tin khóa từ localStorage
+            localStorage.removeItem('loginLockedUntil');
+            if (lockTimeout) {
+                clearTimeout(lockTimeout);
+            }
+        }
+        
+        // Kiểm tra nếu form đang bị khóa
+        function checkIfLocked() {
+            const lockedUntil = localStorage.getItem('loginLockedUntil');
+            if (lockedUntil) {
+                const now = new Date().getTime();
+                const endTime = parseInt(lockedUntil);
+                
+                if (now < endTime) {
+                    const minutesLeft = Math.ceil((endTime - now) / (1000 * 60));
+                    lockForm(minutesLeft);
+                    return true;
+                } else {
+                    localStorage.removeItem('loginLockedUntil');
+                }
+            }
+            return false;
+        }
+        
+        // Xử lý đăng nhập
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (isLocked) {
+                showError('Tài khoản đang bị khóa. Vui lòng chờ.');
+                return;
+            }
+            
+            const password = passwordInput.value.trim();
+            
+            if (!password) {
+                showError('Vui lòng nhập mật khẩu');
+                return;
+            }
+            
+            // Hiển thị loading
+            loading.classList.add('show');
+            loginBtn.disabled = true;
+            loginBtnText.textContent = 'Đang xác thực...';
+            
+            // Giả lập delay xác thực
+            setTimeout(() => {
+                if (password === CORRECT_PASSWORD) {
+                    // Đăng nhập thành công
+                    localStorage.setItem('adminAuthenticated', 'true');
+                    localStorage.setItem('loginTime', new Date().getTime());
+                    
+                    // Reset attempts
+                    attemptsLeft = 5;
+                    localStorage.removeItem('loginAttempts');
+                    
+                    // Chuyển hướng đến trang admin
+                    window.location.href = 'admin.html';
+                } else {
+                    // Sai mật khẩu
+                    attemptsLeft--;
+                    
+                    // Lưu số lần thử còn lại
+                    localStorage.setItem('loginAttempts', attemptsLeft);
+                    
+                    // Cập nhật hiển thị
+                    updateAttemptsDisplay();
+                    
+                    if (attemptsLeft <= 0) {
+                        // Khóa form 15 phút sau 5 lần thử sai
+                        lockForm(15);
+                        attemptsInfo.classList.add('hidden');
+                    } else {
+                        showError(`Mật khẩu không đúng. Bạn còn ${attemptsLeft} lần thử.`);
+                    }
+                    
+                    // Xóa input
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+                
+                // Ẩn loading
+                loading.classList.remove('show');
+                loginBtn.disabled = false;
+                loginBtnText.textContent = 'Đăng nhập';
+            }, 1000);
+        });
+        
+        // Khởi tạo khi trang tải
+        document.addEventListener('DOMContentLoaded', function() {
+            // Kiểm tra nếu đang bị khóa
+            checkIfLocked();
+            
+            // Khôi phục số lần thử từ localStorage
+            const savedAttempts = localStorage.getItem('loginAttempts');
+            if (savedAttempts) {
+                attemptsLeft = parseInt(savedAttempts);
+                updateAttemptsDisplay();
+                
+                if (attemptsLeft <= 0) {
+                    attemptsInfo.classList.add('hidden');
+                }
+            }
+            
+            // Tự động focus vào input mật khẩu
+            passwordInput.focus();
+            
+            // Kiểm tra nếu đã đăng nhập từ trước (trong 24h)
+            const loginTime = localStorage.getItem('loginTime');
+            if (loginTime) {
+                const now = new Date().getTime();
+                const hoursSinceLogin = (now - parseInt(loginTime)) / (1000 * 60 * 60);
+                
+                // Nếu đăng nhập quá 24h thì yêu cầu đăng nhập lại
+                if (hoursSinceLogin > 24) {
+                    localStorage.removeItem('adminAuthenticated');
+                    localStorage.removeItem('loginTime');
+                }
+            }
+        });
+        
+        // Phím tắt Enter để đăng nhập
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !loginBtn.disabled) {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+    
+    <script src="js/effects.js"></script>
+    <script src="js/particles.js"></script>
+</body>
+</html>
