@@ -1680,3 +1680,45 @@ body {
     font-size: 16px;
     font-style: italic;
 }
+@media (max-width: 768px) {
+    .wishes-table th,
+    .wishes-table td {
+        padding: 10px 5px;
+        font-size: 14px;
+    }
+    
+    .relationship-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+    
+    .timestamp {
+        font-size: 10px;
+    }
+    
+    .message-cell {
+        max-width: 200px;
+    }
+    
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .wishes-table {
+        min-width: 600px;
+    }
+    
+    .admin-header h1 {
+        font-size: 20px;
+    }
+    
+    .stat-card {
+        padding: 10px;
+    }
+    
+    .stat-number {
+        font-size: 24px;
+    }
+}
