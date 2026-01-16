@@ -15,9 +15,10 @@
     <div id="glitter-effect"></div>
     <div id="particles-effect"></div>
     <div id="birds-effect"></div>
+    
     <!-- Màn hình phong bì mở đầu -->
     <div id="envelope-screen" class="envelope-screen">
-        <div class="envelope" onclick="openEnvelope()">
+        <div class="envelope" id="main-envelope">
             <div class="envelope-flap"></div>
             <div class="envelope-body">
                 <div class="stamp">🎓</div>
@@ -82,204 +83,195 @@
                         Gia đình chúng tôi trân trọng kính mời Quý Thầy Cô, bạn bè và người thân 
                         đến dự Lễ Tốt Nghiệp THPT của chúng tôi.
                     </p>
+                    
                     <!-- Lịch tốt nghiệp -->
-<section class="calendar-section">
-    <div class="section-header">
-        <h3><i class="far fa-calendar-alt"></i> THỜI GIAN TỔ CHỨC</h3>
-        <div class="section-line"></div>
-    </div>
-    
-    <div class="calendar-container">
-        <div class="calendar-header">
-            <div class="date-info">
-                <h4>Chủ Nhật, ngày 01/03/2026</h4>
-                <p class="venue">Địa chỉ: Sân trường THPT Phạm Văn Đồng</p>
-            </div>
-        </div>
-        
-        <div class="calendar-body">
-            <div class="month-year">
-                <h2>Tháng 3</h2>
-                <p class="year">2026</p>
-            </div>
-            
-            <table class="calendar-table">
-                <thead>
-                    <tr>
-                        <th>T2</th>
-                        <th>T3</th>
-                        <th>T4</th>
-                        <th>T5</th>
-                        <th>T6</th>
-                        <th>T7</th>
-                        <th>CN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="highlight">1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>7</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>10</td>
-                        <td>11</td>
-                        <td>12</td>
-                        <td>13</td>
-                        <td>14</td>
-                        <td>15</td>
-                    </tr>
-                    <tr>
-                        <td>16</td>
-                        <td>17</td>
-                        <td>18</td>
-                        <td>19</td>
-                        <td>20</td>
-                        <td>21</td>
-                        <td>22</td>
-                    </tr>
-                    <tr>
-                        <td>23</td>
-                        <td>24</td>
-                        <td>25</td>
-                        <td>26</td>
-                        <td>27</td>
-                        <td>28</td>
-                        <td>29</td>
-                    </tr>
-                    <tr>
-                        <td>30</td>
-                        <td>31</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="calendar-footer">
-            <p><i class="fas fa-clock"></i> Bắt đầu: 09:30 sáng</p>
-            <p><i class="fas fa-map-marker-alt"></i> Địa điểm: Sân trường THPT Phạm Văn Đồng</p>
-        </div>
-    </div>
-</section>
-
-            <!-- Album ảnh cuộn -->
-           <!-- Album ảnh cuộn -->
-            <section class="album-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-images"></i> HÀNH TRÌNH 3 NĂM</h3>
-                    <div class="section-line"></div>
-                    <p class="section-subtitle">Những khoảnh khắc đáng nhớ dưới mái trường THPT</p>
-                </div>
-                
-                <div class="album-container">
-                    <div class="album-control left-control" onclick="scrollAlbum(-1)">
-                        <i class="fas fa-chevron-left"></i>
-                    </div>
-                    
-                    <!-- KHUNG CHỨA CỐ ĐỊNH GIỐNG ẢNH ĐẠI DIỆN -->
-                    <div class="album-wrapper">
-                        <div class="photo-track" id="photo-track">
-                            <!-- Ảnh sẽ được thêm bằng JavaScript -->
+                    <section class="calendar-section">
+                        <div class="section-header">
+                            <h3><i class="far fa-calendar-alt"></i> THỜI GIAN TỔ CHỨC</h3>
+                            <div class="section-line"></div>
                         </div>
-                    </div>
-                    
-                    <div class="album-control right-control" onclick="scrollAlbum(1)">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
-                
-                <div class="album-indicator">
-                    <span class="indicator active"></span>
-                    <span class="indicator"></span>
-                    <span class="indicator"></span>
-                    <span class="indicator"></span>
-                </div>
-            </section>
-
-            
-
-            <!-- Form gửi lời chúc -->
-            <section class="wishes-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-comment-dots"></i> LỜI CHÚC MỪNG</h3>
-                    <div class="section-line"></div>
-                    <p class="section-subtitle">Gửi những lời chúc tốt đẹp nhất đến tân cử nhân</p>
-                </div>
-                
-                <div class="wishes-container">
-                    <div class="wishes-form">
-                        <form id="wish-form" class="wishes-form">
-                <!-- XÓA các dòng Netlify Forms -->
-                <!-- <input type="hidden" name="form-name" value="wishes"> -->
-                <!-- XÓA: data-netlify="true" netlify -->
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="sender"><i class="fas fa-user"></i> Họ tên của bạn</label>
-                        <input type="text" id="sender" name="sender" placeholder="Nhập họ tên của bạn" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="relationship"><i class="fas fa-users"></i> Mối quan hệ</label>
-                        <select id="relationship" name="relationship" class="elegant-select" required>
-                            <option value="" selected disabled>Chọn mối quan hệ</option>
-                            <option value="family">Gia đình, họ hàng</option>
-                            <option value="friend">Bạn bè</option>
-                            <option value="teacher">Thầy cô giáo</option>
-                            <option value="alumni">Cựu học sinh</option>
-                            <option value="other">Khác</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="message"><i class="fas fa-edit"></i> LỜI CHÚC CỦA BẠN
-                    <textarea id="message" name="message" placeholder="Viết lời chúc của bạn ở đây..." rows="4" required></textarea>
-                </div>
-                
-                <div class="form-submit">
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-paper-plane"></i> Gửi lời chúc
-                    </button>
-                </div>
-            </form>
-        
-        
-        </div>
-    </form>
-</div>
-                    
-                    <div class="wishes-display">
-                        <h4><i class="fas fa-gift"></i> Lời chúc của bạn</h4>
-                        <div class="flower-decoration flower-1">🌸</div>
-                        <div class="flower-decoration flower-2">🌺</div>
-                        <div class="flower-decoration flower-3">🌼</div>
-                        <div class="flower-decoration flower-4">💐</div>
-                        <div class="wishes-list" id="wishes-container">
-                            <!-- Lời chúc sẽ được hiển thị ở đây -->
+                        
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <div class="date-info">
+                                    <h4>Chủ Nhật, ngày 01/03/2026</h4>
+                                    <p class="venue">Địa chỉ: Sân trường THPT Phạm Văn Đồng</p>
+                                </div>
+                            </div>
+                            
+                            <div class="calendar-body">
+                                <div class="month-year">
+                                    <h2>Tháng 3</h2>
+                                    <p class="year">2026</p>
+                                </div>
+                                
+                                <table class="calendar-table">
+                                    <thead>
+                                        <tr>
+                                            <th>T2</th>
+                                            <th>T3</th>
+                                            <th>T4</th>
+                                            <th>T5</th>
+                                            <th>T6</th>
+                                            <th>T7</th>
+                                            <th>CN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="highlight">1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>10</td>
+                                            <td>11</td>
+                                            <td>12</td>
+                                            <td>13</td>
+                                            <td>14</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>16</td>
+                                            <td>17</td>
+                                            <td>18</td>
+                                            <td>19</td>
+                                            <td>20</td>
+                                            <td>21</td>
+                                            <td>22</td>
+                                        </tr>
+                                        <tr>
+                                            <td>23</td>
+                                            <td>24</td>
+                                            <td>25</td>
+                                            <td>26</td>
+                                            <td>27</td>
+                                            <td>28</td>
+                                            <td>29</td>
+                                        </tr>
+                                        <tr>
+                                            <td>30</td>
+                                            <td>31</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="calendar-footer">
+                                <p><i class="fas fa-clock"></i> Bắt đầu: 09:30 sáng</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Địa điểm: Sân trường THPT Phạm Văn Đồng</p>
+                            </div>
                         </div>
-                    </div>
+                    </section>
+                    
+                    <!-- Album ảnh cuộn -->
+                    <section class="album-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-images"></i> HÀNH TRÌNH 3 NĂM</h3>
+                            <div class="section-line"></div>
+                            <p class="section-subtitle">Những khoảnh khắc đáng nhớ dưới mái trường THPT</p>
+                        </div>
+                        
+                        <div class="album-container">
+                            <div class="album-control left-control" onclick="scrollAlbum(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                            
+                            <div class="album-wrapper">
+                                <div class="photo-track" id="photo-track">
+                                    <!-- Ảnh sẽ được thêm bằng JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <div class="album-control right-control" onclick="scrollAlbum(1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="album-indicator">
+                            <span class="indicator active"></span>
+                            <span class="indicator"></span>
+                            <span class="indicator"></span>
+                            <span class="indicator"></span>
+                        </div>
+                    </section>
+
+                    <!-- Form gửi lời chúc -->
+                    <section class="wishes-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-comment-dots"></i> LỜI CHÚC MỪNG</h3>
+                            <div class="section-line"></div>
+                            <p class="section-subtitle">Gửi những lời chúc tốt đẹp nhất đến tân cử nhân</p>
+                        </div>
+                        
+                        <div class="wishes-container">
+                            <div class="wishes-form">
+                                <form id="wish-form" class="wishes-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="sender"><i class="fas fa-user"></i> Họ tên của bạn</label>
+                                            <input type="text" id="sender" name="sender" placeholder="Nhập họ tên của bạn" required>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="relationship"><i class="fas fa-users"></i> Mối quan hệ</label>
+                                            <select id="relationship" name="relationship" class="elegant-select" required>
+                                                <option value="" selected disabled>Chọn mối quan hệ</option>
+                                                <option value="family">Gia đình, họ hàng</option>
+                                                <option value="friend">Bạn bè</option>
+                                                <option value="teacher">Thầy cô giáo</option>
+                                                <option value="alumni">Cựu học sinh</option>
+                                                <option value="other">Khác</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="message"><i class="fas fa-edit"></i> LỜI CHÚC CỦA BẠN</label>
+                                        <textarea id="message" name="message" placeholder="Viết lời chúc của bạn ở đây..." rows="4" required></textarea>
+                                    </div>
+                                    
+                                    <div class="form-submit">
+                                        <button type="submit" class="submit-btn">
+                                            <i class="fas fa-paper-plane"></i> Gửi lời chúc
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <div class="wishes-display">
+                                <h4><i class="fas fa-gift"></i> Lời chúc của bạn</h4>
+                                <div class="flower-decoration flower-1">🌸</div>
+                                <div class="flower-decoration flower-2">🌺</div>
+                                <div class="flower-decoration flower-3">🌼</div>
+                                <div class="flower-decoration flower-4">💐</div>
+                                <div class="wishes-list" id="wishes-container">
+                                    <!-- Lời chúc sẽ được hiển thị ở đây -->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </section>
+            </div>
         </main>
         
         <footer class="footer">
@@ -313,13 +305,69 @@
     </div>
 
     <!-- Phần tử audio cho nhạc nền -->
-    <!-- Thay đổi phần select nhạc trong index.html -->
-<select id="music-selector" class="elegant-select">
-    <!-- Đảm bảo có nhạc mặc định được chọn -->
-    <option value="assets/music/Gió Nổi Lên Rồi _ 起风了 (1).mp3" selected>Nhạc truyền cảm hứng</option>
-    <option value="">Tắt nhạc</option>
-</select>
+    <select id="music-selector" class="elegant-select" style="display: none;">
+        <option value="assets/music/Gió Nổi Lên Rồi _ 起风了 (1).mp3" selected>Nhạc truyền cảm hứng</option>
+        <option value="">Tắt nhạc</option>
+    </select>
 
+    <script>
+    // Script đơn giản để mở phong bì
+    document.addEventListener('DOMContentLoaded', function() {
+        const envelope = document.getElementById('main-envelope');
+        const envelopeScreen = document.getElementById('envelope-screen');
+        const mainContent = document.getElementById('main-content');
+        
+        if (envelope) {
+            // Thêm hiệu ứng đập tim
+            setTimeout(() => {
+                envelope.classList.add('heartbeat');
+            }, 1000);
+            
+            // Thêm hiệu ứng hover
+            envelope.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('open')) {
+                    this.style.transform = 'scale(1.05)';
+                }
+            });
+            
+            envelope.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('open')) {
+                    this.style.transform = 'scale(1)';
+                }
+            });
+            
+            // Sự kiện click mở envelope
+            envelope.addEventListener('click', function(e) {
+                if (!this.classList.contains('open')) {
+                    this.classList.add('open');
+                    this.classList.remove('heartbeat');
+                    
+                    // Tạo hiệu ứng sau 1 giây
+                    setTimeout(() => {
+                        envelopeScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            envelopeScreen.style.display = 'none';
+                            mainContent.classList.remove('hidden');
+                            
+                            // Phát nhạc nếu có hàm
+                            if (window.playMusicOnEnvelopeOpen) {
+                                window.playMusicOnEnvelopeOpen();
+                            }
+                        }, 1000);
+                    }, 1000);
+                }
+            });
+        }
+        
+        // Dự phòng: nếu click vào bất kỳ đâu trên màn hình envelope
+        envelopeScreen.addEventListener('click', function(e) {
+            if (e.target === envelopeScreen) {
+                envelope.click();
+            }
+        });
+    });
+    </script>
+    
     <script type="module" src="js/firebase-config.js"></script>
     <script type="module" src="js/wishes.js"></script>
     <script src="js/effects.js"></script>
@@ -329,8 +377,9 @@
     <script src="js/auto-slide.js"></script>
     <script type="module" src="main.js"></script>
     <script src="js/particles.js"></script>
-    
-<!-- Kiểm tra đã có FontAwesome chưa -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Thêm sau các script khác -->
+    <script src="js/heart-effects.js"></script>
+    <!-- Kiểm tra đã có FontAwesome chưa -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </body>
 </html>
