@@ -1722,3 +1722,62 @@ body {
         font-size: 24px;
     }
 }
+/* ========== LINK ẨN TRONG CHỮ "TỐT NGHIỆP" ========== */
+.graduation-link-container {
+    position: relative;
+    display: inline-block;
+}
+
+.graduation-link {
+    color: #8B7355;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.graduation-link:hover {
+    color: #DAA520;
+}
+
+.graduation-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(to right, #FFD700, #DAA520);
+    transition: width 0.3s ease;
+}
+
+.graduation-link:hover::after {
+    width: 100%;
+}
+
+/* Biểu tượng khóa nhỏ xuất hiện khi hover */
+.graduation-link::before {
+    content: '🔒';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    font-size: 10px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.graduation-link:hover::before {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+/* Mobile: Luôn hiện biểu tượng khóa */
+@media (max-width: 768px) {
+    .graduation-link::before {
+        content: ' 🔒';
+        position: static;
+        transform: none;
+        opacity: 1;
+        font-size: 10px;
+    }
+}
