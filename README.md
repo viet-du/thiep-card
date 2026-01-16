@@ -186,4 +186,5 @@ Tăng vùng chạm cho các nút điều hướng
 © Bản Quyền
 
 © 2026 Thiệp Mời Tốt Nghiệp
-Developed with ❤️ by [Tên của bạn]
+Developed with ❤️ by [Tên của bạn] dự án của Dư Quốc Viêt
+
