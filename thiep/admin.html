@@ -944,7 +944,33 @@
             }, 24 * 60 * 60 * 1000);
         });
     </script>
-    
+    <script>
+    // Tự động phát nhạc khi vào trang admin dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+        // Đợi 1 giây rồi phát nhạc
+        setTimeout(() => {
+            const music = new Audio('assets/music/Vượt Ranh Giới _ 越界 (Song Quỹ OST).mp3');
+            music.volume = 0.3;
+            music.loop = true;
+            
+            // Thử phát nhạc
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('Nhạc đang phát trong trang admin dashboard');
+                }).catch(error => {
+                    console.log('Lỗi phát nhạc:', error);
+                    // Thử lại khi user tương tác
+                    document.addEventListener('click', function tryPlayOnce() {
+                        music.play().catch(() => {});
+                        document.removeEventListener('click', tryPlayOnce);
+                    });
+                });
+            }
+        }, 1000);
+    });
+    </script>
     <script src="js/effects.js"></script>
     <script src="js/particles.js"></script>
 </body>
